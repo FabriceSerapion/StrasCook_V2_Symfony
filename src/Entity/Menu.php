@@ -15,31 +15,31 @@ class Menu
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $name_menu = null;
+    private ?string $name = null;
 
     #[ORM\Column]
-    private ?float $price_menu = null;
+    private ?float $price = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $note_menu = null;
+    private ?float $note = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_appetizer = null;
+    private ?string $descr_appetizer = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_starter = null;
+    private ?string $descr_starter = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_meal = null;
+    private ?string $descr_meal = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_dessert = null;
+    private ?string $descr_dessert = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_cheese = null;
+    private ?string $descr_cheese = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $descr_menu_cuteness = null;
+    private ?string $descr_cuteness = null;
 
     public function getId(): ?int
     {
@@ -48,108 +48,108 @@ class Menu
 
     public function getNameMenu(): ?string
     {
-        return $this->name_menu;
+        return $this->name;
     }
 
-    public function setNameMenu(string $name_menu): self
+    public function setNameMenu(string $name): self
     {
-        $this->name_menu = $name_menu;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getPriceMenu(): ?float
     {
-        return $this->price_menu;
+        return $this->price;
     }
 
-    public function setPriceMenu(float $price_menu): self
+    public function setPriceMenu(float $price): self
     {
-        $this->price_menu = $price_menu;
+        $this->price = $price;
 
         return $this;
     }
 
     public function getNoteMenu(): ?float
     {
-        return $this->note_menu;
+        return $this->note;
     }
 
-    public function setNoteMenu(?float $note_menu): self
+    public function setNoteMenu(?float $note): self
     {
-        $this->note_menu = $note_menu;
+        $this->note = $note;
 
         return $this;
     }
 
     public function getDescrMenuAppetizer(): ?string
     {
-        return $this->descr_menu_appetizer;
+        return $this->descr_appetizer;
     }
 
-    public function setDescrMenuAppetizer(?string $descr_menu_appetizer): self
+    public function setDescrMenuAppetizer(?string $descr_appetizer): self
     {
-        $this->descr_menu_appetizer = $descr_menu_appetizer;
+        $this->descr_appetizer = $descr_appetizer;
 
         return $this;
     }
 
     public function getDescrMenuStarter(): ?string
     {
-        return $this->descr_menu_starter;
+        return $this->descr_starter;
     }
 
-    public function setDescrMenuStarter(?string $descr_menu_starter): self
+    public function setDescrMenuStarter(?string $descr_starter): self
     {
-        $this->descr_menu_starter = $descr_menu_starter;
+        $this->descr_starter = $descr_starter;
 
         return $this;
     }
 
     public function getDescrMenuMeal(): ?string
     {
-        return $this->descr_menu_meal;
+        return $this->descr_meal;
     }
 
-    public function setDescrMenuMeal(?string $descr_menu_meal): self
+    public function setDescrMenuMeal(?string $descr_meal): self
     {
-        $this->descr_menu_meal = $descr_menu_meal;
+        $this->descr_meal = $descr_meal;
 
         return $this;
     }
 
     public function getDescrMenuDessert(): ?string
     {
-        return $this->descr_menu_dessert;
+        return $this->descr_dessert;
     }
 
-    public function setDescrMenuDessert(?string $descr_menu_dessert): self
+    public function setDescrMenuDessert(?string $descr_dessert): self
     {
-        $this->descr_menu_dessert = $descr_menu_dessert;
+        $this->descr_dessert = $descr_dessert;
 
         return $this;
     }
 
     public function getDescrMenuCheese(): ?string
     {
-        return $this->descr_menu_cheese;
+        return $this->descr_cheese;
     }
 
-    public function setDescrMenuCheese(?string $descr_menu_cheese): self
+    public function setDescrMenuCheese(?string $descr_cheese): self
     {
-        $this->descr_menu_cheese = $descr_menu_cheese;
+        $this->descr_cheese = $descr_cheese;
 
         return $this;
     }
 
     public function getDescrMenuCuteness(): ?string
     {
-        return $this->descr_menu_cuteness;
+        return $this->descr_cuteness;
     }
 
-    public function setDescrMenuCuteness(?string $descr_menu_cuteness): self
+    public function setDescrMenuCuteness(?string $descr_cuteness): self
     {
-        $this->descr_menu_cuteness = $descr_menu_cuteness;
+        $this->descr_cuteness = $descr_cuteness;
 
         return $this;
     }

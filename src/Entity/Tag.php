@@ -14,7 +14,7 @@ class Tag
     private ?int $id = null;
 
     #[ORM\Column(length: 25)]
-    private ?string $name_tag = null;
+    private ?string $name = null;
 
     public function getId(): ?int
     {
@@ -23,12 +23,12 @@ class Tag
 
     public function getNameTag(): ?string
     {
-        return $this->name_tag;
+        return $this->name;
     }
 
-    public function setNameTag(string $name_tag): self
+    public function setNameTag(string $name): self
     {
-        $this->name_tag = $name_tag;
+        $this->name = $name;
 
         return $this;
     }

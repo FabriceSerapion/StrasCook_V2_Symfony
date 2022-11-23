@@ -15,51 +15,51 @@ class Booking
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date_booking = null;
+    private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adress_booking = null;
+    private ?string $adress = null;
 
     #[ORM\Column]
-    private ?float $price_prestation = null;
+    private ?float $price = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateBooking(): ?\DateTimeInterface
+    public function getDate(): ?\DateTimeInterface
     {
-        return $this->date_booking;
+        return $this->date;
     }
 
-    public function setDateBooking(\DateTimeInterface $date_booking): self
+    public function setDate(\DateTimeInterface $date): self
     {
-        $this->date_booking = $date_booking;
+        $this->date = $date;
 
         return $this;
     }
 
-    public function getAdressBooking(): ?string
+    public function getAdress(): ?string
     {
-        return $this->adress_booking;
+        return $this->adress;
     }
 
-    public function setAdressBooking(string $adress_booking): self
+    public function setAdress(string $adress): self
     {
-        $this->adress_booking = $adress_booking;
+        $this->adress = $adress;
 
         return $this;
     }
 
-    public function getPricePrestation(): ?float
+    public function getPrice(): ?float
     {
-        return $this->price_prestation;
+        return $this->price;
     }
 
-    public function setPricePrestation(float $price_prestation): self
+    public function setPrice(float $price): self
     {
-        $this->price_prestation = $price_prestation;
+        $this->price = $price;
 
         return $this;
     }

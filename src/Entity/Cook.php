@@ -15,19 +15,19 @@ class Cook
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $firstname_cook = null;
+    private ?string $firstname = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $lastname_cook = null;
+    private ?string $lastname = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $description_cook = null;
+    private ?string $description = null;
 
     #[ORM\Column]
-    private ?int $begin_cook = null;
+    private ?int $shift_start = null;
 
     #[ORM\Column]
-    private ?int $end_cook = null;
+    private ?int $shift_end = null;
 
     public function getId(): ?int
     {
@@ -36,60 +36,60 @@ class Cook
 
     public function getFirstnameCook(): ?string
     {
-        return $this->firstname_cook;
+        return $this->firstname;
     }
 
-    public function setFirstnameCook(string $firstname_cook): self
+    public function setFirstnameCook(string $firstname): self
     {
-        $this->firstname_cook = $firstname_cook;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
     public function getLastnameCook(): ?string
     {
-        return $this->lastname_cook;
+        return $this->lastname;
     }
 
-    public function setLastnameCook(string $lastname_cook): self
+    public function setLastnameCook(string $lastname): self
     {
-        $this->lastname_cook = $lastname_cook;
+        $this->lastname = $lastname;
 
         return $this;
     }
 
     public function getDescriptionCook(): ?string
     {
-        return $this->description_cook;
+        return $this->description;
     }
 
-    public function setDescriptionCook(?string $description_cook): self
+    public function setDescriptionCook(?string $description): self
     {
-        $this->description_cook = $description_cook;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getBeginCook(): ?int
     {
-        return $this->begin_cook;
+        return $this->shift_start;
     }
 
-    public function setBeginCook(int $begin_cook): self
+    public function setBeginCook(int $shift_start): self
     {
-        $this->begin_cook = $begin_cook;
+        $this->shift_start = $shift_start;
 
         return $this;
     }
 
     public function getEndCook(): ?int
     {
-        return $this->end_cook;
+        return $this->shift_end;
     }
 
-    public function setEndCook(int $end_cook): self
+    public function setEndCook(int $shift_end): self
     {
-        $this->end_cook = $end_cook;
+        $this->shift_end = $shift_end;
 
         return $this;
     }
