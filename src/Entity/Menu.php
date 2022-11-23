@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MenuRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,7 +23,7 @@ class Menu
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]
-    private ?float $note = null;
+    private ?float $rating = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descr_appetizer = null;
@@ -40,6 +42,18 @@ class Menu
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descr_cuteness = null;
+
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'menus')]
+    private Collection $tags;
+
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'menus')]
+    private Collection $usersRating;
+
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+        $this->usersRating = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -70,14 +84,14 @@ class Menu
         return $this;
     }
 
-    public function getNoteMenu(): ?float
+    public function getRatingMenu(): ?float
     {
-        return $this->note;
+        return $this->rating;
     }
 
-    public function setNoteMenu(?float $note): self
+    public function setRatingMenu(?float $rating): self
     {
-        $this->note = $note;
+        $this->rating = $rating;
 
         return $this;
     }
@@ -150,6 +164,54 @@ class Menu
     public function setDescrMenuCuteness(?string $descr_cuteness): self
     {
         $this->descr_cuteness = $descr_cuteness;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): self
+    {
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersRating(): Collection
+    {
+        return $this->usersRating;
+    }
+
+    public function addUsersRating(User $usersRating): self
+    {
+        if (!$this->usersRating->contains($usersRating)) {
+            $this->usersRating->add($usersRating);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersRating(User $usersRating): self
+    {
+        $this->usersRating->removeElement($usersRating);
 
         return $this;
     }
