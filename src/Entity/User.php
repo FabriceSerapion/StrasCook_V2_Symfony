@@ -20,8 +20,8 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
-    private ?int $isAdmin = null;
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $isAdmin = null;
 
     public function getId(): ?int
     {
