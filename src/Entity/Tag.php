@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TagRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
@@ -15,6 +17,14 @@ class Tag
 
     #[ORM\Column(length: 25)]
     private ?string $name = null;
+
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'tags')]
+    private Collection $menus;
+
+    public function __construct()
+    {
+        $this->menus = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -31,5 +41,13 @@ class Tag
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
     }
 }
