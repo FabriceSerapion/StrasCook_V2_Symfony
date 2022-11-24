@@ -22,6 +22,8 @@ class Menu
     #[ORM\Column]
     private ?float $price = null;
 
+    // We probably have to keep this singular $rating as well as the plural $ratings (from the ManyToOne on line 50)
+    // plural $ratings = get ratings from users, make an average of it and declare it as singular $rating
     #[ORM\Column(nullable: true)]
     private ?float $rating = null;
 
@@ -46,13 +48,13 @@ class Menu
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'menus')]
     private Collection $tags;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'menus')]
-    private Collection $usersRating;
+    #[ORM\OneToMany(mappedBy: 'menu', targetEntity: UserRating::class, orphanRemoval: true)]
+    private Collection $ratings;
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->usersRating = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -91,6 +93,7 @@ class Menu
 
     public function setRatingMenu(?float $rating): self
     {
+        // TODO : get ratings from UserRating and make an average of them
         $this->rating = $rating;
 
         return $this;
@@ -193,26 +196,10 @@ class Menu
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, UserRating>
      */
-    public function getUsersRating(): Collection
+    public function getRatings(): Collection
     {
-        return $this->usersRating;
-    }
-
-    public function addUsersRating(User $usersRating): self
-    {
-        if (!$this->usersRating->contains($usersRating)) {
-            $this->usersRating->add($usersRating);
-        }
-
-        return $this;
-    }
-
-    public function removeUsersRating(User $usersRating): self
-    {
-        $this->usersRating->removeElement($usersRating);
-
-        return $this;
+        return $this->ratings;
     }
 }

@@ -25,18 +25,17 @@ class User
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
     private ?bool $isAdmin = null;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'usersRating')]
-    // this side of the relation will probably be useful for the rating of a menu
-    private Collection $menus;
-
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Booking::class)]
     // this side of the relation will probably be useful to get a history of past bookings
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: UserRating::class)]
+    private Collection $ratings;
+
     public function __construct()
     {
-        $this->menus = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -81,37 +80,6 @@ class User
     }
 
     /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenus(): Collection
-    {
-        return $this->menus;
-    }
-
-    // Will be used to rate a menu
-    public function addMenuRating(Menu $menu): self
-    {
-        if (!$this->menus->contains($menu)) {
-            $this->menus->add($menu);
-            $menu->addUsersRating($this);
-        }
-
-        return $this;
-    }
-
-    // Will be used to delete a rating on a menu
-    public function removeMenuRating(Menu $menu): self
-    {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removeUsersRating($this);
-        }
-
-        return $this;
-    }
-
-    // TODO : Add functions to create update delete menus as cook/admin
-
-    /**
      * @return Collection<int, Booking>
      */
     public function getBookings(): Collection
@@ -136,6 +104,36 @@ class User
             // set the owning side to null (unless already changed)
             if ($booking->getCustomer() === $this) {
                 $booking->setCustomer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserRating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(UserRating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings->add($rating);
+            $rating->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(UserRating $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getCustomer() === $this) {
+                $rating->setCustomer(null);
             }
         }
 

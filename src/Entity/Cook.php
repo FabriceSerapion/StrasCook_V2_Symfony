@@ -80,24 +80,24 @@ class Cook
         return $this;
     }
 
-    public function getBeginCook(): ?int
+    public function getShiftStart(): ?int
     {
         return $this->shift_start;
     }
 
-    public function setBeginCook(int $shift_start): self
+    public function setShiftStart(int $shift_start): self
     {
         $this->shift_start = $shift_start;
 
         return $this;
     }
 
-    public function getEndCook(): ?int
+    public function getShiftEnd(): ?int
     {
         return $this->shift_end;
     }
 
-    public function setEndCook(int $shift_end): self
+    public function setShiftEnd(int $shift_end): self
     {
         $this->shift_end = $shift_end;
 

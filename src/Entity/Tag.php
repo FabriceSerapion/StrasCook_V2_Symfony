@@ -50,25 +50,4 @@ class Tag
     {
         return $this->menus;
     }
-
-    // WIP : addMenu will probably be pointless (as we will add a tag to a menu)
-    public function addMenu(Menu $menu): self
-    {
-        if (!$this->menus->contains($menu)) {
-            $this->menus->add($menu);
-            $menu->addTag($this);
-        }
-
-        return $this;
-    }
-
-    // WIP : removeMenu will probably be pointless (as we will remove a tag to a menu)
-    public function removeMenu(Menu $menu): self
-    {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removeTag($this);
-        }
-
-        return $this;
-    }
 }
