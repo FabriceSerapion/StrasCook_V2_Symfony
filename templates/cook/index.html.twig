@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cook index{% endblock %}
+
+{% block body %}
+    <h1>Cook index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Description</th>
+                <th>Shift_start</th>
+                <th>Shift_end</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cook in cooks %}
+            <tr>
+                <td>{{ cook.id }}</td>
+                <td>{{ cook.firstname }}</td>
+                <td>{{ cook.lastname }}</td>
+                <td>{{ cook.description }}</td>
+                <td>{{ cook.shiftStart }}</td>
+                <td>{{ cook.shiftEnd }}</td>
+                <td>
+                    <a href="{{ path('app_cook_show', {'id': cook.id}) }}">show</a>
+                    <a href="{{ path('app_cook_edit', {'id': cook.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cook_new') }}">Create new</a>
+{% endblock %}

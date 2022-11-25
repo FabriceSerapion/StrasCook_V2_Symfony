@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UserRating{% endblock %}
+
+{% block body %}
+    <h1>UserRating</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user_rating.id }}</td>
+            </tr>
+            <tr>
+                <th>Rating</th>
+                <td>{{ user_rating.rating }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_user_rating_index') }}">back to list</a>
+
+    <a href="{{ path('app_user_rating_edit', {'id': user_rating.id}) }}">edit</a>
+
+    {{ include('user_rating/_delete_form.html.twig') }}
+{% endblock %}
