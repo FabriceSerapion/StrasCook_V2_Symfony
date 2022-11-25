@@ -1,0 +1,29 @@
+.accueil {
+    background-image: url('../images/Homepage1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+    filter: brightness(50%);
+}
+
+#form-line {
+    background: #6b2024;
+}
+
+[type=button], [type=reset], [type=submit], button {
+    display: flex;
+    align-items: center;
+}
+
+#adress{
+    width: 100%;
+}
+
+.tag-container {
+    color: white;
+    background-color: gray;
+    width: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}

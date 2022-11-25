@@ -1,0 +1,101 @@
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+.tag-container {
+    color: white;
+    background-color: gray;
+    width: fit-content;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+}
+
+.modal-body{
+    text-align: center;
+}
+
+.section{
+    margin-top: 30px;
+    margin-bottom: 18px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 14px;
+    text-transform: uppercase;
+    color:brown;
+}
+
+
+/* Style for note */
+
+  /*  
+   * Rating styles
+   */
+  .rating {
+      width: 107px;
+      font-size: 25px;
+      overflow:hidden;
+  }
+  .rating a {
+      float: right;
+      color: #aaa;
+      text-decoration: none;
+      -webkit-transition: color .4s;
+      -moz-transition: color .4s;
+      -o-transition: color .4s;
+      transition: color .4s;
+  }
+  .rating a:hover,
+  .rating a:hover ~ a,
+  .rating a:focus,
+  .rating a:focus ~ a		{
+      color: orange;
+      cursor: pointer;
+  }
+  .rating2 {
+      direction: rtl;
+  }
+  .rating2 a {
+      float:none
+  }
+
+.container.summaries {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+.results-intro {
+    font-size: 25px;
+}
+.accueil {
+    background-image: url('../images/menu-entete4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+}
+.display-1 {
+    font-size: 50px; 
+    margin-top: 80px;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+.load {
+    font-size: 20px; 
+    margin-bottom: 80px;
+    padding: 1em;
+    font-weight: bold;
+    background-color: rgb(87, 133, 50);
+    border-radius: 50% 20% / 10% 40%;
+}
