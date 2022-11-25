@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Cook{% endblock %}
+
+{% block body %}
+    <h1>Create new Cook</h1>
+
+    {{ include('cook/_form.html.twig') }}
+
+    <a href="{{ path('app_cook_index') }}">back to list</a>
+{% endblock %}

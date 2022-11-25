@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cook{% endblock %}
+
+{% block body %}
+    <h1>Cook</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cook.id }}</td>
+            </tr>
+            <tr>
+                <th>Firstname</th>
+                <td>{{ cook.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Lastname</th>
+                <td>{{ cook.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ cook.description }}</td>
+            </tr>
+            <tr>
+                <th>Shift_start</th>
+                <td>{{ cook.shiftStart }}</td>
+            </tr>
+            <tr>
+                <th>Shift_end</th>
+                <td>{{ cook.shiftEnd }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cook_index') }}">back to list</a>
+
+    <a href="{{ path('app_cook_edit', {'id': cook.id}) }}">edit</a>
+
+    {{ include('cook/_delete_form.html.twig') }}
+{% endblock %}

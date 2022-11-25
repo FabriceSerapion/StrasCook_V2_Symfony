@@ -1,0 +1,115 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheet %}<link rel="stylesheet" href="/assets/css/admin.css">
+{% endblock %}
+
+{% block content %}
+	<main>
+		<div class="header">
+			<img rel="icon" src="assets/images/favicon.ico"/>
+			<h1>Interface Administrateur StrasCook</h1>
+		</div>
+		<div class="bg-image" style="background-image: url('assets/images/admin.jpg')">
+			<div class="forms-admin">
+				<h2>Formulaire d'ajout d'un menu</h2>
+				<div class="forms-admin-menus">
+					<a href="/items/add?table=0">Ajouter un menu !</a>
+					<ul>
+						{% for menu in menus %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{menu.name_menu}}</li>
+									</div>
+									<div class="col-sm">
+										<a href="/items/edit?id={{ menu.id }}&table=0">Modifier le menu</a>
+									</div>
+									<div class="col-sm">
+										<form action="/items/delete?table=0" method="POST">
+											<input type="hidden" name="id" value="{{ menu.id }}">
+											<button class="delete_button">Supprimer le menu</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<h2>Formulaire d'ajout d'un tag</h2>
+				<div class="forms-admin-tags">
+					<a href="/items/add?table=1">Ajouter un tag !</a>
+					<ul>
+						{% for tag in tags %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{tag.name_tag}}</li>
+									</div>
+									<div class="col-sm">
+										<a href="/items/edit?id={{ tag.id }}&table=1">Modifier le tag</a>
+									</div>
+									<div class="col-sm">
+										<form action="/items/delete?table=1" method="POST">
+											<input type="hidden" name="id" value="{{ tag.id }}">
+											<button class="delete_button">Supprimer le tag</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<h2>Formulaire d'ajout d'un cuisinier</h2>
+				<div class="forms-admin-cooks">
+					<a href="/items/add?table=2">Ajouter un cuisinier !</a>
+					<ul>
+						{% for cook in cooks %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{cook.firstname_cook}}</li>
+									</div>
+									<div class="col-sm">
+										<a href="/items/edit?id={{ cook.id }}&table=2">Modifier le cuisinier</a>
+									</div>
+									<div class="col-sm">
+										<form action="/items/delete?table=2" method="POST">
+											<input type="hidden" name="id" value="{{ cook.id }}">
+											<button class="delete_button">Supprimer le cuisinier</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="forms-admin-books">
+					<table>
+						<tr>
+							<th colspan="6">Historique des commandes</th>
+						</tr>
+
+						<tr>
+							<th scope='col'>Date de réservation</th>
+							<th scope='col'>Adresse du client</th>
+							<th scope='col'>Chef cuisinier</th>
+							<th scope='col'>Nom du menu</th>
+							<th scope='col'>Quantité de prestation</th>
+							<th scope='col'>Prix total</th>
+						</tr>
+						{% for booking in bookings %}
+							<tr>
+								<td>{{booking.date_booking}}</td>
+								<td>{{booking.adress_booking}}</td>
+								<td>{{booking.firstname_cook}}</td>
+								<td>{{booking.name_menu}}</td>
+								<td>{{booking.quantity_prestation}}</td>
+								<td>{{booking.price_prestation}}€</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
