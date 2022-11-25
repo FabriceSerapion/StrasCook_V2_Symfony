@@ -38,6 +38,19 @@ class BookingRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findLastId(int $idUser): Booking|false
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.customer = :idUser')
+            ->setParameter('idUser', $idUser)
+            ->getQuery()
+            ->getResult()
+    ;
+        // $query = 'SELECT id from booking  where id_user = ' . $idUser . ' order by id DESC LIMIT 1;';
+
+        // return $this->pdo->query($query)->fetch();
+    }
 
 //    /**
 //     * @return Booking[] Returns an array of Booking objects
