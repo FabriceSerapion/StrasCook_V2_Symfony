@@ -1,0 +1,13 @@
+.error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+    padding-top:20px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    border: 1px solid;
+    margin: 10px 0px;
+    padding-left:70px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
