@@ -13,7 +13,7 @@
 			<div class="forms-admin">
 				<h2>Formulaire d'ajout d'un menu</h2>
 				<div class="forms-admin-menus">
-					<a href="/items/add?table=0">Ajouter un menu !</a>
+					<a href="{{ path('app_menu_new') }}">Ajouter un menu !</a>
 					<ul>
 						{% for menu in menus %}
 							<div class="container">
@@ -22,13 +22,10 @@
 										<li>{{menu.name_menu}}</li>
 									</div>
 									<div class="col-sm">
-										<a href="/items/edit?id={{ menu.id }}&table=0">Modifier le menu</a>
+										<a href="{{ path('app_menu_edit'), {'id': menu.id}) }}">Modifier le menu</a>
 									</div>
 									<div class="col-sm">
-										<form action="/items/delete?table=0" method="POST">
-											<input type="hidden" name="id" value="{{ menu.id }}">
-											<button class="delete_button">Supprimer le menu</button>
-										</form>
+										{{ include('menu/_delete_form.html.twig') }}
 									</div>
 								</div>
 							</div>
@@ -37,7 +34,7 @@
 				</div>
 				<h2>Formulaire d'ajout d'un tag</h2>
 				<div class="forms-admin-tags">
-					<a href="/items/add?table=1">Ajouter un tag !</a>
+					<a href="{{ path('app_tag_new') }}">Ajouter un tag !</a>
 					<ul>
 						{% for tag in tags %}
 							<div class="container">
@@ -46,13 +43,10 @@
 										<li>{{tag.name_tag}}</li>
 									</div>
 									<div class="col-sm">
-										<a href="/items/edit?id={{ tag.id }}&table=1">Modifier le tag</a>
+										<a href="{{ path('app_tag_edit'), {'id': tag.id}) }}">Modifier le tag</a>
 									</div>
 									<div class="col-sm">
-										<form action="/items/delete?table=1" method="POST">
-											<input type="hidden" name="id" value="{{ tag.id }}">
-											<button class="delete_button">Supprimer le tag</button>
-										</form>
+										{{ include('tag/_delete_form.html.twig') }}
 									</div>
 								</div>
 							</div>
@@ -61,7 +55,7 @@
 				</div>
 				<h2>Formulaire d'ajout d'un cuisinier</h2>
 				<div class="forms-admin-cooks">
-					<a href="/items/add?table=2">Ajouter un cuisinier !</a>
+					<a href="{{ path('app_cook_new') }}">Ajouter un cuisinier !</a>
 					<ul>
 						{% for cook in cooks %}
 							<div class="container">
@@ -70,13 +64,10 @@
 										<li>{{cook.firstname_cook}}</li>
 									</div>
 									<div class="col-sm">
-										<a href="/items/edit?id={{ cook.id }}&table=2">Modifier le cuisinier</a>
+										<a href="{{ path('app_cook_edit'), {'id': cook.id}) }}">Modifier le cuisinier</a>
 									</div>
 									<div class="col-sm">
-										<form action="/items/delete?table=2" method="POST">
-											<input type="hidden" name="id" value="{{ cook.id }}">
-											<button class="delete_button">Supprimer le cuisinier</button>
-										</form>
+										{{ include('cook/_delete_form.html.twig') }}
 									</div>
 								</div>
 							</div>
@@ -99,12 +90,12 @@
 						</tr>
 						{% for booking in bookings %}
 							<tr>
-								<td>{{booking.date_booking}}</td>
-								<td>{{booking.adress_booking}}</td>
-								<td>{{booking.firstname_cook}}</td>
-								<td>{{booking.name_menu}}</td>
-								<td>{{booking.quantity_prestation}}</td>
-								<td>{{booking.price_prestation}}€</td>
+								<td>{{ booking.date }}</td>
+								<td>{{ booking.adress }}</td>
+								<td>{{ booking.cook }}</td>
+								<td>{{ booking.menu }}</td>
+								<td>{{ booking.quantity }}</td>
+								<td>{{ booking.price }}€</td>
 							</tr>
 						{% endfor %}
 					</table>
