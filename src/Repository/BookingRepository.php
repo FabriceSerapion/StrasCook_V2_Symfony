@@ -30,13 +30,47 @@ class BookingRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Booking $entity, bool $flush = false): void
+    public function findAll(
+        int $limit = 0,
+        string $orderBy = '',
+        string $direction = 'ASC',
+        int $idUser = 0,
+        string $bookingDate = ''
+    ): Booking {
+        $query = $this->createQueryBuilder('b')
+            ->select('b','c.firstname','m.name')
+            ->innerJoin('b.cook','c')
+            ->leftJoin('b.menu','m');
+            if ($idUser > 0) {
+                $query=$this
+                ->andWhere('b.id_user = :idUser')
+                ->setParameter('idUser', $idUser);
+            }
+            if ($bookingDate) {
+                $query=$this
+                ->andwhere('b.date_booking > :bookingDate')
+                ->setParameter('bookingDate', $bookingDate);
+            }
+            if ($orderBy) {
+                $query=$this
+                ->orderBy($orderBy, $direction);
+            }
+            if ($limit > 0) {
+                $query=$this
+                 ->setMaxResults($limit);
+            }
+        return $this->getQuery()
+           ->getResult();
+    }
+    public function findLastId(int $idUser): Booking|false
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        return $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.customer = :idUser')
+            ->setParameter('idUser', $idUser)
+            ->getQuery()
+            ->getResult()
+    ;
     }
 
 //    /**

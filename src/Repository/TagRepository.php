@@ -38,7 +38,29 @@ class TagRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+/**
+     * Get all tags for one menu from database by ID.
+     */
 
+    public function findTagsFromMenu(int $id): Tag|false
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t')
+            ->join('t.menus', 'm')
+            ->where('m.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+    
+      // $this->createQueryBuilder('p')
+        // ->select('p, t')
+        // ->join('p.type', 't')
+        // ->where('t.categorie = :categorie')
+        // ->orderBy('p.id')
+        // ->setParameter('categorie', $categorie);
+        
 //    /**
 //     * @return Tag[] Returns an array of Tag objects
 //     */
