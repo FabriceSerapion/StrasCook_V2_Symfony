@@ -30,14 +30,6 @@ class BookingRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Booking $entity, bool $flush = false): void
-    {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
-    }
     public function findAll(
         int $limit = 0,
         string $orderBy = '',
@@ -49,11 +41,13 @@ class BookingRepository extends ServiceEntityRepository
             ->innerJoin('b.id','c');
             if ($idUser > 0) {
                 $query=$this
-                ->andWhere('booking.id_user = ' . $idUser);
+                ->andWhere('b.id_user = :idUser')
+                ->setParameter('idUser', $idUser);
             }
             if ($bookingDate) {
                 $query=$this
-                ->andwhere('booking.date_booking > "' . $bookingDate . '"');
+                ->andwhere('b.date_booking > :bookingDate')
+                ->setParameter('bookingDate', $bookingDate);
             }
             if ($orderBy) {
                 $query=$this
@@ -63,7 +57,8 @@ class BookingRepository extends ServiceEntityRepository
                 $query=$this
                  ->setMaxResults($limit);
             }
-        return $this->getQuery()->getResult();
+        return $this->getQuery()
+           ->getResult();
     }
     public function findLastId(int $idUser): Booking|false
     {
