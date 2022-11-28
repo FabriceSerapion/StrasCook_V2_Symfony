@@ -4,9 +4,11 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Ajout de cuisinier</h1>
+	<div class="d-flex flex-column align-items-center mt-4">
+		<h1>Ajouter un cuisinier</h1>
 
-	{{ include('cook/_form.html.twig') }}
+		{{ include('cook/_form.html.twig') }}
 
-	<a href="{{ path('app_admin') }}">Retour</a>
+		<a href="{{ path('app_admin') }}">Retour</a>
+	</div>
 {% endblock %}

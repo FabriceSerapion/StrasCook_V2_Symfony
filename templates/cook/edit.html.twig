@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Éditer le cuisinier :
-		{{ cook.firstname }}</h1>
+	<div class="d-flex flex-column align-items-center mt-4">
+		<h1>Éditer le cuisinier :
+			{{ cook.firstname }}</h1>
 
-	{{ include('cook/_form.html.twig', {'button_label': 'Éditer'}) }}
+		{{ include('cook/_form.html.twig', {'button_label': 'Éditer'}) }}
 
-	<a href="{{ path('app_admin') }}">Retour</a>
+		<a href="{{ path('app_admin') }}">Retour</a>
+	</div>
 
 	{#
-			Included in user/admin.html.twig
-			{{ include('cook/_delete_form.html.twig') }} 
-		#}
+				Included in user/admin.html.twig
+				{{ include('cook/_delete_form.html.twig') }} 
+			#}
 {% endblock %}
