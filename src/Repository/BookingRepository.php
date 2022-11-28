@@ -38,7 +38,9 @@ class BookingRepository extends ServiceEntityRepository
         string $bookingDate = ''
     ): Booking {
         $query = $this->createQueryBuilder('b')
-            ->innerJoin('b.id','c');
+            ->select('b','c.firstname','m.name')
+            ->innerJoin('b.cook','c')
+            ->leftJoin('b.menu','m');
             if ($idUser > 0) {
                 $query=$this
                 ->andWhere('b.id_user = :idUser')
