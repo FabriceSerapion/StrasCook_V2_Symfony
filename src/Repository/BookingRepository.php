@@ -38,6 +38,33 @@ class BookingRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findAll(
+        int $limit = 0,
+        string $orderBy = '',
+        string $direction = 'ASC',
+        int $idUser = 0,
+        string $bookingDate = ''
+    ): Booking {
+        $query = $this->createQueryBuilder('b')
+            ->innerJoin('b.id','c');
+            if ($idUser > 0) {
+                $query=$this
+                ->andWhere('booking.id_user = ' . $idUser);
+            }
+            if ($bookingDate) {
+                $query=$this
+                ->andwhere('booking.date_booking > "' . $bookingDate . '"');
+            }
+            if ($orderBy) {
+                $query=$this
+                ->orderBy($orderBy, $direction);
+            }
+            if ($limit > 0) {
+                $query=$this
+                 ->setMaxResults($limit);
+            }
+        return $this->getQuery()->getResult();
+    }
     public function findLastId(int $idUser): Booking|false
     {
         return $this->createQueryBuilder('b')
@@ -47,9 +74,6 @@ class BookingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
     ;
-        // $query = 'SELECT id from booking  where id_user = ' . $idUser . ' order by id DESC LIMIT 1;';
-
-        // return $this->pdo->query($query)->fetch();
     }
 
 //    /**
