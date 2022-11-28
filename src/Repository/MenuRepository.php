@@ -39,6 +39,25 @@ class MenuRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllFromTag(string $tag): Menu|false
+    {
+        if (empty($tag)) {
+            return $this->createQueryBuilder('m')
+                ->select('m')
+                ->getQuery()
+                ->getResult();
+        } else {
+            return $this->createQueryBuilder('m')
+            ->select('m')
+            ->join('m.tags', 't')
+            ->where('t.name = :tag')
+            ->setParameter('tag', $tag)
+            ->getQuery()
+            ->getResult()
+        ;
+        }
+    }
+
 //    /**
 //     * @return Menu[] Returns an array of Menu objects
 //     */

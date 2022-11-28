@@ -38,8 +38,19 @@ class CookRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-//    /**
+    /**
+     * Get all row from database.
+     */
+    public function selectAnId(int $hour): Cook|bool
+    {
+        $query = $this->createQueryBuilder('c')
+            ->where('c.shift_start >= :hour')
+            ->andWhere('c.shift_end < :hour')
+            ->setParameter('hour', $hour)
+            ->setMaxResults(1);
+            return $this->getQuery()->getResult();
+    }
+    //    /**
 //     * @return Cook[] Returns an array of Cook objects
 //     */
 //    public function findByExampleField($value): array
