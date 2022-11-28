@@ -1,5 +1,5 @@
 <!--
     TODO : define base and layout
-    TODO : Default "webpack encore bundle" lines were generated with base : should we keep and use those ?
+    TODO : Define routes and links for href and src in all pages.
 
  -->

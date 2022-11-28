@@ -43,6 +43,16 @@ class Tag
         return $this;
     }
 
+    // ! only for fixtures tests 
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+        }
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Menu>
      */

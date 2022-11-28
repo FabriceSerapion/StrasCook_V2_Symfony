@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit UserRating{% endblock %}
+{% block title %}Éditer la note
+{% endblock %}
 
 {% block body %}
-    <h1>Edit UserRating</h1>
+	<div class="d-flex flex-column align-items-center mt-4">
+		<h1>Éditer la note</h1>
 
-    {{ include('user_rating/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('user_rating/_form.html.twig', {'button_label': 'Éditer'}) }}
 
-    <a href="{{ path('app_user_rating_index') }}">back to list</a>
+		{{ include('user_rating/_delete_form.html.twig') }}
 
-    {{ include('user_rating/_delete_form.html.twig') }}
+		<a href="{{ path('app_user') }}">Retour à votre espace privé</a>
+	</div>
 {% endblock %}

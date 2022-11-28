@@ -1,13 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Cook{% endblock %}
+{% block title %}Éditer le cuisinier
+	{{ cook.firstname }}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Cook</h1>
+	<div class="d-flex flex-column align-items-center mt-4">
+		<h1>Éditer le cuisinier :
+			{{ cook.firstname }}</h1>
 
-    {{ include('cook/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('cook/_form.html.twig', {'button_label': 'Éditer'}) }}
 
-    <a href="{{ path('app_cook_index') }}">back to list</a>
+		<a href="{{ path('app_admin') }}">Retour</a>
+	</div>
 
-    {{ include('cook/_delete_form.html.twig') }}
+	{#
+				Included in user/admin.html.twig
+				{{ include('cook/_delete_form.html.twig') }} 
+			#}
 {% endblock %}

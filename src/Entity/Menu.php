@@ -62,36 +62,36 @@ class Menu
         return $this->id;
     }
 
-    public function getNameMenu(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setNameMenu(string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getPriceMenu(): ?float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPriceMenu(float $price): self
+    public function setPrice(float $price): self
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getRatingMenu(): ?float
+    public function getRating(): ?float
     {
         return $this->rating;
     }
 
-    public function setRatingMenu(?float $rating): self
+    public function setRating(?float $rating): self
     {
         // TODO : get ratings from UserRating and make an average of them
         $this->rating = $rating;
@@ -99,72 +99,72 @@ class Menu
         return $this;
     }
 
-    public function getDescrMenuAppetizer(): ?string
+    public function getDescrAppetizer(): ?string
     {
         return $this->descr_appetizer;
     }
 
-    public function setDescrMenuAppetizer(?string $descr_appetizer): self
+    public function setDescrAppetizer(?string $descr_appetizer): self
     {
         $this->descr_appetizer = $descr_appetizer;
 
         return $this;
     }
 
-    public function getDescrMenuStarter(): ?string
+    public function getDescrStarter(): ?string
     {
         return $this->descr_starter;
     }
 
-    public function setDescrMenuStarter(?string $descr_starter): self
+    public function setDescrStarter(?string $descr_starter): self
     {
         $this->descr_starter = $descr_starter;
 
         return $this;
     }
 
-    public function getDescrMenuMeal(): ?string
+    public function getDescrMeal(): ?string
     {
         return $this->descr_meal;
     }
 
-    public function setDescrMenuMeal(?string $descr_meal): self
+    public function setDescrMeal(?string $descr_meal): self
     {
         $this->descr_meal = $descr_meal;
 
         return $this;
     }
 
-    public function getDescrMenuDessert(): ?string
+    public function getDescrDessert(): ?string
     {
         return $this->descr_dessert;
     }
 
-    public function setDescrMenuDessert(?string $descr_dessert): self
+    public function setDescrDessert(?string $descr_dessert): self
     {
         $this->descr_dessert = $descr_dessert;
 
         return $this;
     }
 
-    public function getDescrMenuCheese(): ?string
+    public function getDescrCheese(): ?string
     {
         return $this->descr_cheese;
     }
 
-    public function setDescrMenuCheese(?string $descr_cheese): self
+    public function setDescrCheese(?string $descr_cheese): self
     {
         $this->descr_cheese = $descr_cheese;
 
         return $this;
     }
 
-    public function getDescrMenuCuteness(): ?string
+    public function getDescrCuteness(): ?string
     {
         return $this->descr_cuteness;
     }
 
-    public function setDescrMenuCuteness(?string $descr_cuteness): self
+    public function setDescrCuteness(?string $descr_cuteness): self
     {
         $this->descr_cuteness = $descr_cuteness;
 

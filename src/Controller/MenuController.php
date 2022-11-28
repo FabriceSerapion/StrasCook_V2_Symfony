@@ -16,8 +16,9 @@ class MenuController extends AbstractController
     #[Route('/', name: 'app_menu_index', methods: ['GET'])]
     public function index(MenuRepository $menuRepository): Response
     {
+        $menus = $menuRepository->findAll();
         return $this->render('menu/index.html.twig', [
-            'menus' => $menuRepository->findAll(),
+            'menus' => $menus,
         ]);
     }
 
@@ -69,7 +70,7 @@ class MenuController extends AbstractController
     #[Route('/{id}', name: 'app_menu_delete', methods: ['POST'])]
     public function delete(Request $request, Menu $menu, MenuRepository $menuRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$menu->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $menu->getId(), $request->request->get('_token'))) {
             $menuRepository->remove($menu, true);
         }
 
