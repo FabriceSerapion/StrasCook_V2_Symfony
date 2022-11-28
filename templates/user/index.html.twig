@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+		{{ encore_entry_link_tags('user') }}
+{% endblock %}
+
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}

@@ -1,43 +1,76 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-	{{ encore_entry_link_tags('menus') }}
-{% endblock %}
-
-{% block title %}Menu index
+	{{ encore_entry_link_tags('home') }}
 {% endblock %}
 
 {% block body %}
+	<section class="accueil bg-dark d-flex w-100 h-50 flex-column justify-content-center align-items-center">
+		<h1 class="display-1 text-white text-center">Adoptez votre chef à domicile pour savourer les délices du monde!</h1>
+		<p class="load text-center text-white">Vivez une expérience unique avec ce nouveau concept tendance qui est une alternative au restaurant</p>
+	</section>
 
+	{# form to allow client to make a booking #}
 
-	<main>
-		<section class="accueil d-flex w-100 h-50 flex-column justify-content-center align-items-center">
-			<h1 class="display-1 text-white text-center">Découvrez les menus de notre chef: disponibilités en temps réel et réservation en ligne, confirmation immédiate !</h1>
-			<p class="load text-center text-black">Choisissez votre menu, réservez en ligne, puis dégustez...</p>
-		</section>
-		<div class="container summaries">
-			<div>
-				<p class="results-intro">Les menus proposés par notre chef cuisinier sont très variés</p>
-			</div>
-			<div>
-				{# <form action="/menus/show?tag={{ tag }}" method="GET">
-																																									<div class="input-group mb-3">
-																																										<input type="text" value="{{ tag }}" name="tag" id="tag" placeholder="Veuillez entrer un tag !" class="form-control" aria-describedby="basic-addon2">
-																																										<div class="input-group-append">
-																																											<button class="btn btn-outline-secondary" type="submit">Valider</button>
-																																										</div>
-																																									</div>
-																																								</form> #}
-			</div>
-			<div>
-				<form action="/menus" method="POST">
-					<button type="submit" class="btn btn-dark">Réinitialiser la recherche</button>
-				</form>
-			</div>
-		</div>
+	{# TODO: This form has to be replaced by BookingType available in Form folder #}
+	{# {% include 'booking/new.html.twig' %} #}
+	{# <div id="form-line">
+																										<div class="container">
+																											<form class="pt-2" action="/booking?adress={{ adress }}&date={{ date }}&hour={{ hour }}&benefit={{ benefit }}" method="GET">
+																												<div class="row">
+																													<div class="col">
+																														<label for="adress" class="text-white">RÉSERVÉ À
+																														</label><br/>
+																														<input type="text" class="form-control" value="{{ adress }}" id="adress" name="adress" placeholder="Adresse, Code postal, ville..." required pattern="([0-9]*) ?([a-zA-Z,'\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)">
+																														<p>
+																															{% if errors['adress1'] %}
+																																{{errors['adress1']}}
+																															{% endif %}
+																														</p>
+																													</div>
+																													<div class="col">
+																														<label for="date" class="text-white">LE</label><br/>
+																														<input type="date" class="form-control" value="{{ date }}" id="date" name="date" placeholder="Date" required>
+																														<p>
+																															{% if errors['date1'] %}
+																																{{errors['date1']}}
+																															{% endif %}
+																														</p>
+																													</div>
+																													<div class="col">
+																														<label for="hour" class="text-white">À</label><br/>
+																														<input type="time" class="form-control" value="{{ hour }}" id="hour" name="hour" placeholder="Heure" required>
+																														<p>
+																															{% if errors['hour1'] %}
+																																{{errors['hour1']}}
+																															{% endif %}
+																														</p>
+																													</div>
+																													<div class="col">
+																														<label for="benefit" class="text-white">Type de prestation</label><br/>
+																														<select id="benefit" class="form-control" name="benefit" value="{{ benefit }}">
+																															<option value="">--Faites votre choix--</option>
+																															<option value="dinner">Dîner</option>
+																														</select>
+																														<p>
+																															{% if errors['benefit1'] %}
+																																{{errors['benefit1']}}
+																															{% endif %}
+																														</p>
+																													</div>
+																													<div type="button" class="col">
+																														<button type="submit" class="btn btn-light mt-2">Validez votre choix</button>
+																													</div>
+																												</div>
+																											</form>
+																										</div>
+																									</div> #}
 
-		<div class="album py-5 bg-light">
-			<div class="container">
+	{# display of three menus only for home page #}
+
+		<main>
+
+			<div class="album py-5 bg-light"> <div class="container">
 				<div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 g-3">
 
 					{% for menu in menus %}
@@ -77,17 +110,17 @@
 										</div>
 									</div>
 									{# <div class=" d-flex justify-content-start">
-																																																																{% for key, tag in menu["tags"] %}
-																																																																	{% if key <4 %}
-																																																																		<div class="tag-container mb-2 me-2">
-																																																																			{{tag.name}}
-																																																																		</div>
-																																																																	{% endif %}
-																																																																{% endfor %}
-																																																																{% if menu["tags"]|length > 4 %}
-																																																																	...
-																																																																{% endif %}
-																																																															</div> #}
+																																																																																		{% for key, tag in menu["tags"] %}
+																																																																																			{% if key <4 %}
+																																																																																				<div class="tag-container mb-2 me-2">
+																																																																																					{{tag.name}}
+																																																																																				</div>
+																																																																																			{% endif %}
+																																																																																		{% endfor %}
+																																																																																		{% if menu["tags"]|length > 4 %}
+																																																																																			...
+																																																																																		{% endif %}
+																																																																																	</div> #}
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
 											<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_{{menu.id}}">Voir ce menu</button>
