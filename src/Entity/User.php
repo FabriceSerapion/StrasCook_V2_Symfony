@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -16,10 +18,18 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 40)]
+    #[Assert\NotBlank(message: 'Le nom d\'utilisateur est nécessaire !')]
+    #[Assert\Length(
+        max: 40,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $username = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 40)]
+    #[Assert\NotBlank(message: 'Le mot de passe est nécessaire !')]
+    #[Assert\Length(
+        max: 40,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
