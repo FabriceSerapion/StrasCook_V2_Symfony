@@ -109,18 +109,18 @@
 											{% endfor %}
 										</div>
 									</div>
-									{# <div class=" d-flex justify-content-start">
-																																																																																		{% for key, tag in menu["tags"] %}
-																																																																																			{% if key <4 %}
-																																																																																				<div class="tag-container mb-2 me-2">
-																																																																																					{{tag.name}}
-																																																																																				</div>
-																																																																																			{% endif %}
-																																																																																		{% endfor %}
-																																																																																		{% if menu["tags"]|length > 4 %}
-																																																																																			...
-																																																																																		{% endif %}
-																																																																																	</div> #}
+									<div class=" d-flex justify-content-start">
+									{% for key, tag in menu.tags %}
+										{% if key <4 %}
+											<div class="tag-container mb-2 me-2">
+												{{tag.getNameTag()}}
+											</div>
+										{% endif %}
+									{% endfor %}
+									{% if menu.tags|length > 4 %}
+										...
+									{% endif %}
+									</div>
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
 											<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#modal_{{menu.id}}">Voir ce menu</button>

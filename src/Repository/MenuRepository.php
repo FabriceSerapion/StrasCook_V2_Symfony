@@ -39,7 +39,7 @@ class MenuRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllFromTag(string $tag): Menu|false
+    public function findAllFromTag(string $tag): array|false
     {
         if (empty($tag)) {
             return $this->createQueryBuilder('m')

@@ -50,7 +50,7 @@ class TagRepository extends ServiceEntityRepository
             ->where('m.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
     
