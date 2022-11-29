@@ -12,17 +12,17 @@
 				<a class="nav-link d-flex justify-content-end" href="/menu">MENUS</a>
 				<a class="nav-link d-flex justify-content-end" href="/about">À PROPOS</a>
 
-				{% if username is defined %}
+				{% if app.user.username is defined %}
 					<a class="nav-link d-flex justify-content-end" href="/user">
 						ESPACE PARTICULIER
 					</a>
 					<a class="nav-link d-flex justify-content-end" href="/user">
 						BONJOUR
-						{{username}}
+						{{app.user.username}}
 					</a>
 					<a class="mt-1" href="/logout">logout</a>
 				{% else %}
-					<a class="nav-link d-flex justify-content-end" href="/user">SIGNUP/LOGIN</a>
+					<a class="nav-link d-flex justify-content-end" href="/login">SIGNUP/LOGIN</a>
 				{% endif %}
 			</div>
 		</div>
