@@ -42,7 +42,7 @@ class TagRepository extends ServiceEntityRepository
      * Get all tags for one menu from database by ID.
      */
 
-    public function findTagsFromMenu(int $id): Tag|false
+    public function findTagsFromMenu(int $id): array|false
     {
         return $this->createQueryBuilder('t')
             ->select('t')
@@ -50,7 +50,7 @@ class TagRepository extends ServiceEntityRepository
             ->where('m.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
         ;
     }
     

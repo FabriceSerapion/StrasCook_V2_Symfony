@@ -51,6 +51,8 @@ class Menu
     #[ORM\OneToMany(mappedBy: 'menu', targetEntity: UserRating::class, orphanRemoval: true)]
     private Collection $ratings;
 
+    private ?int $totalRatings;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -167,6 +169,18 @@ class Menu
     public function setDescrCuteness(?string $descr_cuteness): self
     {
         $this->descr_cuteness = $descr_cuteness;
+
+        return $this;
+    }
+
+    public function getTotalRatings(): ?int
+    {
+        return $this->totalRatings;
+    }
+
+    public function setTotalRatings(?int $totalRatings): self
+    {
+        $this->totalRatings = $totalRatings;
 
         return $this;
     }
