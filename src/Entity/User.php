@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -17,8 +18,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180, unique: true)]
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le nom d\'utilisateur est nécessaire !')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $username = null;
+
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le mot de passe est nécessaire !')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
+    private ?string $password = null;
+
+    #[ORM\Column(
+        type: Types::BOOLEAN,
+        nullable: true)]
+    private ?bool $isAdmin = null;
+
+    #[ORM\OneToMany(
+        mappedBy: 'customer',
+        targetEntity: Booking::class)]
+    // this side of the relation will probably be useful to get a history of past bookings
+    private Collection $bookings;
+
+    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: UserRating::class)]
+    private Collection $ratings;
 
     #[ORM\Column]
     private array $roles = [];
