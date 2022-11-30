@@ -46,9 +46,9 @@ class Booking
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?string
     {
-        return $this->date;
+        return $this->date->format('Y-m-d');
     }
 
     public function setDate(\DateTimeInterface $date): self
@@ -130,9 +130,9 @@ class Booking
         return $this;
     }
 
-    public function getTime(): ?int
+    public function getTime(): ?string
     {
-        return $this->time;
+        return $this->date->format('H:i');
     }
 
     public function setTime(int $time): self

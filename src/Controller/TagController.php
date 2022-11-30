@@ -31,7 +31,7 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $tagRepository->save($tag, true);
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('tag/new.html.twig', [
@@ -40,13 +40,13 @@ class TagController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]
-    public function show(Tag $tag): Response
-    {
-        return $this->render('tag/show.html.twig', [
-            'tag' => $tag,
-        ]);
-    }
+    // #[Route('/{id}', name: 'app_tag_show', methods: ['GET'])]
+    // public function show(Tag $tag): Response
+    // {
+    //     return $this->render('tag/show.html.twig', [
+    //         'tag' => $tag,
+    //     ]);
+    // }
 
     #[Route('/{id}/edit', name: 'app_tag_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tag $tag, TagRepository $tagRepository): Response
@@ -57,7 +57,7 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $tagRepository->save($tag, true);
 
-            return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('tag/edit.html.twig', [
@@ -73,6 +73,6 @@ class TagController extends AbstractController
             $tagRepository->remove($tag, true);
         }
 
-        return $this->redirectToRoute('app_tag_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 }

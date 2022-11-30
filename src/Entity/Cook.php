@@ -44,36 +44,36 @@ class Cook
         return $this->id;
     }
 
-    public function getFirstnameCook(): ?string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
 
-    public function setFirstnameCook(string $firstname): self
+    public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getLastnameCook(): ?string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
 
-    public function setLastnameCook(string $lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 
         return $this;
     }
 
-    public function getDescriptionCook(): ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescriptionCook(?string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 

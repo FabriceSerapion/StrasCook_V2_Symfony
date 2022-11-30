@@ -22,7 +22,7 @@ class TagFixtures extends Fixture
         $faker = Factory::create();
         for ($i = 0; $i < 6; $i++) {
             $tag = new Tag();
-            $tag->setNameTag(self::TAGS[$i]);
+            $tag->setName(self::TAGS[$i]);
             $manager->persist($tag);
             $this->addReference('tag_' . self::TAGS[$i], $tag);
         }

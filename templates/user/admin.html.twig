@@ -1,8 +1,8 @@
 {% extends 'layout.html.twig' %}
 
-{% block stylesheets %}
+{# {% block stylesheets %}
 		{{ encore_entry_link_tags('admin') }}
-{% endblock %}
+{% endblock %} #}
 
 {% block content %}
 	<main>
@@ -95,8 +95,8 @@
 								<td>{{ booking.date }}</td>
 								<td>{{ booking.time }}</td>
 								<td>{{ booking.adress }}</td>
-								<td>{{ booking.cook }}</td>
-								<td>{{ booking.menu }}</td>
+								<td>{{ booking.cook.firstname }}</td>
+								<td>{{ booking.menu.name }}</td>
 								<td>{{ booking.quantity }}</td>
 								<td>{{ booking.price }}€</td>
 							</tr>
