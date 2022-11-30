@@ -8,18 +8,25 @@
 		<div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 	{% endif %}
 
-	<form action="{{ path('app_login') }}" method="post">
-		<label for="username">Nom d'utilisateur:</label>
-		<input type="text" id="username" name="_username" value="{{ last_username }}">
+	<div class="h-100 d-flex justify-content-center align-items-center">
+		<form action="{{ path('app_login') }}" method="post" class="w-25 p-3">
+			<h1>Connexion</h1>
+			<div class="mb-3">
+				<label for="username" class="form-label">Nom d'utilisateur:</label>
+				<input type="text" id="username" name="_username" class="form-control" value="{{ last_username }}">
 
-		<label for="password">Mot de passe:</label>
-		<input
-		type="password" id="password" name="_password">
+				<label for="password" class="form-label">Mot de passe:</label>
+				<input
+				type="password" id="password" class="form-control" name="_password">
 
-		{# If you want to control the URL the user is redirected to on success #}
-		<input type="hidden" name="_target_path" value="/">
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-		<button type="submit">Connexion</button>
-	</form>
-	<a href="/register">Si vous n'avez pas encore de compte, créez en un ici</a>
+				{# If you want to control the URL the user is redirected to on success #}
+				<input type="hidden" name="_target_path" value="/">
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<button type="submit" class="w-100 btn btn-lg btn-primary mt-3">Connexion</button>
+			</div>
+			<p>Si vous n'avez pas encore de compte, créez en un
+				<a href="/register">ici</a>
+			</p>
+		</form>
+	</div>
 {% endblock %}

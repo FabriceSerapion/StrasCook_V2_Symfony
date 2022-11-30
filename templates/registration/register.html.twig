@@ -4,15 +4,44 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Inscription</h1>
+	<div class="h-100 d-flex justify-content-center align-items-center">
+		<form action="/signup" method="POST" class="w-25 p-3">
+			<h1>Inscription</h1>
 
-	{{ form_start(registrationForm) }}
-	{{ form_row(registrationForm.username) }}
-	{{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-	{{ form_row(registrationForm.agreeTerms) }}
+			{{ form_start(registrationForm) }}
+			<div class="mb-3">
+				{{ form_label(registrationForm.username, 'Nom d\'utilisateur', {'attr': {'class': 'form-label'}}) }}
+				{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+			</div>
+			<div class="mb-3">
+					{{ form_label(registrationForm.username, 'Mot de passe', {'attr': {'class': 'form-label'}}) }}
+					{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+			</div>
+			<div class="mb-3">
+				{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-label'}}) }}
+				{{ form_label(registrationForm.agreeTerms, 'Acceptez les conditions', {'attr': {'class': 'form-control'}}) }}
+			</div>
+			<button type="submit" class="w-100 btn btn-lg btn-primary">S'inscrire</button>
+				{{ form_end(registrationForm) }}
+			</form>
+		</div>
+	{% endblock %}
 
-	<button type="submit" class="btn">S'inscrire</button>
-	{{ form_end(registrationForm) }}
-{% endblock %}
+	{# 
+																													{% block content %}
+																													
+																														<div class="mb-3">
+																															<label for="username" class="form-label">Nom d'utilisateur</label>
+																															<input type="text" class="form-control" id="username" name="username" placeholder="your username">
+																														</div>
+																														<div class="mb-3">
+																															<label for="password" class="form-label">Password</label>
+																															<input name="password" type="password" class="form-control" id="password" placeholder="Password">
+																														</div>
+																														<input class="w-100 btn btn-lg btn-primary" type="submit" value="login">
+																														{% if error %}
+																															<p>
+																																{{error}}
+																															</p>
+																														{% endif %}
+																													</form></div>{% endblock %} #}
