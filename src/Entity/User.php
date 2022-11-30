@@ -3,40 +3,63 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-class User
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le nom d\'utilisateur est nécessaire !')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $username = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le mot de passe est nécessaire !')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[ORM\Column(
+        type: Types::BOOLEAN,
+        nullable: true)]
     private ?bool $isAdmin = null;
 
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Booking::class)]
+    #[ORM\OneToMany(
+        mappedBy: 'customer',
+        targetEntity: Booking::class)]
     // this side of the relation will probably be useful to get a history of past bookings
     private Collection $bookings;
 
     #[ORM\OneToMany(mappedBy: 'customer', targetEntity: UserRating::class)]
     private Collection $ratings;
 
-    public function __construct()
-    {
-        $this->bookings = new ArrayCollection();
-        $this->ratings = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private array $roles = [];
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
@@ -55,7 +78,39 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -67,76 +122,12 @@ class User
         return $this;
     }
 
-    public function getIsAdmin(): ?int
-    {
-        return $this->isAdmin;
-    }
-
-    public function setIsAdmin(?int $isAdmin): self
-    {
-        $this->isAdmin = $isAdmin;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Booking>
+     * @see UserInterface
      */
-    public function getBookings(): Collection
+    public function eraseCredentials()
     {
-        return $this->bookings;
-    }
-
-    public function addBooking(Booking $booking): self
-    {
-        if (!$this->bookings->contains($booking)) {
-            $this->bookings->add($booking);
-            $booking->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    // TODO Will this feature be used ?
-    public function removeBooking(Booking $booking): self
-    {
-        if ($this->bookings->removeElement($booking)) {
-            // set the owning side to null (unless already changed)
-            if ($booking->getCustomer() === $this) {
-                $booking->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, UserRating>
-     */
-    public function getRatings(): Collection
-    {
-        return $this->ratings;
-    }
-
-    public function addRating(UserRating $rating): self
-    {
-        if (!$this->ratings->contains($rating)) {
-            $this->ratings->add($rating);
-            $rating->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRating(UserRating $rating): self
-    {
-        if ($this->ratings->removeElement($rating)) {
-            // set the owning side to null (unless already changed)
-            if ($rating->getCustomer() === $this) {
-                $rating->setCustomer(null);
-            }
-        }
-
-        return $this;
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
     }
 }
