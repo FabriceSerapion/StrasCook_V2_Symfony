@@ -40,12 +40,12 @@ class Tag
         return $this->id;
     }
 
-    public function getNameTag(): ?string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setNameTag(string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 

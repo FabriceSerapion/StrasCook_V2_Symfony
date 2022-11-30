@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Menu;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,7 @@ class MenuType extends AbstractType
             ->add('descr_dessert')
             ->add('descr_cheese')
             ->add('descr_cuteness')
-            ->add('tags')
+            ->add('tagsArea')
         ;
     }
 

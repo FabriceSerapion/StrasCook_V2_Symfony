@@ -38,7 +38,7 @@ class MenuController extends AbstractController
      * Show informations --> menus with their tags linked, search by tag
      */
     #[Route('/showtag', name: 'app_menu_show', methods: ['POST'])]
-    public function showMenus(MenuRepository $menuRepository, TagRepository $tagRepository): Response
+    public function showMenus(MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
     {
         //Validation --> tag must be string
         $tagValidated = trim(htmlspecialchars($_POST['tag']));
@@ -46,9 +46,11 @@ class MenuController extends AbstractController
 
         foreach ($menus as $idx => $menu) {
             $tags = $tagRepository->findTagsFromMenu($menu->getId());
+            $ratings = $userRatingRepository->findAllRatingsByMenu($menu->getId());
             foreach ($tags as $tag) {
                 $menus[$idx]->addTag($tag);
             }
+            $menus[$idx]->setTotalRatings($ratings[0]["totalRatings"]);
         }
 
         $data = ['menus' => $menus];
@@ -67,7 +69,7 @@ class MenuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $menuRepository->save($menu, true);
 
-            return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('menu/new.html.twig', [
@@ -93,7 +95,7 @@ class MenuController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $menuRepository->save($menu, true);
 
-            return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('menu/edit.html.twig', [
@@ -109,6 +111,6 @@ class MenuController extends AbstractController
             $menuRepository->remove($menu, true);
         }
 
-        return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 }

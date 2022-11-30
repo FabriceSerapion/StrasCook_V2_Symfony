@@ -74,13 +74,14 @@
 													</svg>
 												{% endif %}
 											{% endfor %}
+											({{menu.getTotalRatings()}})
 										</div>
 									</div>
 									<div class=" d-flex justify-content-start">
 									{% for key, tag in menu.tags %}
 										{% if key <4 %}
 											<div class="tag-container mb-2 me-2">
-												{{tag.getNameTag()}}
+												{{tag.name}}
 											</div>
 										{% endif %}
 									{% endfor %}

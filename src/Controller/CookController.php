@@ -31,7 +31,7 @@ class CookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $cookRepository->save($cook, true);
 
-            return $this->redirectToRoute('app_cook_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('cook/new.html.twig', [
@@ -57,7 +57,7 @@ class CookController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $cookRepository->save($cook, true);
 
-            return $this->redirectToRoute('app_cook_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('cook/edit.html.twig', [
@@ -73,6 +73,6 @@ class CookController extends AbstractController
             $cookRepository->remove($cook, true);
         }
 
-        return $this->redirectToRoute('app_cook_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
     }
 }
