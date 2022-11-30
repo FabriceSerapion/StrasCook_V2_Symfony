@@ -39,6 +39,37 @@ class UserRatingRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+     * Get all ratings for one user from database by ID.
+     */
+    public function findAllMenuBooked(int $idUser): array|false
+    {
+    return $this->createQueryBuilder('b')
+        ->select('DISTINCT m')
+        ->innerJoin('b.menu','m')
+        ->where('b.customer = :idUser')
+        ->setParameter('idUser', $idUser)
+        ->getQuery()
+        ->getResult()
+    ;
+    }
+
+    /**
+     * Get all ratings for one menu from database by ID.
+     */
+    public function findAllRatingsByMenu(int $idMenu): array
+   {
+       return $this->createQueryBuilder('u')
+       ->select('SUM(u.rating) as ratings')
+       ->addSelect('COUNT(u.rating) as totalRatings')
+       ->innerJoin('u.menu', 'm')
+       ->where('m.id = :idMenu')
+       ->setParameter('idMenu', $idMenu)
+       ->getQuery()
+       ->getResult()
+       ;
+   }
+
 //    /**
 //     * @return UserRating[] Returns an array of UserRating objects
 //     */
