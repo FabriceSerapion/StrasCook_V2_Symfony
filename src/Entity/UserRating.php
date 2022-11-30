@@ -25,12 +25,16 @@ class UserRating
     )]
     private ?int $rating = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Ratings')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(
+        inversedBy: 'Ratings')]
+    #[ORM\JoinColumn(
+        nullable: false)]
     private ?User $customer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'ratings')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(
+        inversedBy: 'ratings')]
+    #[ORM\JoinColumn(
+        nullable: false)]
     private ?Menu $menu = null;
 
     public function getId(): ?int

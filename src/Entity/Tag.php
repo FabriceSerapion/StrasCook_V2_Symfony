@@ -16,14 +16,18 @@ class Tag
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 25)]
-    #[Assert\NotBlank(message: 'Le nom du tag est nécessaire !')]
+    #[ORM\Column(
+        type: 'string', length: 25)]
+    #[Assert\NotBlank(
+        message: 'Le nom du tag est nécessaire !')]
     #[Assert\Length(
         max: 25,
         maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'tags')]
+    #[ORM\ManyToMany(
+        targetEntity: Menu::class,
+        mappedBy: 'tags')]
     private Collection $menus;
 
     public function __construct()

@@ -18,24 +18,34 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 40)]
-    #[Assert\NotBlank(message: 'Le nom d\'utilisateur est nécessaire !')]
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le nom d\'utilisateur est nécessaire !')]
     #[Assert\Length(
-        max: 40,
+        max: 255,
         maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $username = null;
 
-    #[ORM\Column(type: 'string', length: 40)]
-    #[Assert\NotBlank(message: 'Le mot de passe est nécessaire !')]
+    #[ORM\Column(
+        type: 'string',
+        length: 255)]
+    #[Assert\NotBlank(
+        message: 'Le mot de passe est nécessaire !')]
     #[Assert\Length(
-        max: 40,
+        max: 255,
         maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[ORM\Column(
+        type: Types::BOOLEAN,
+        nullable: true)]
     private ?bool $isAdmin = null;
 
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: Booking::class)]
+    #[ORM\OneToMany(
+        mappedBy: 'customer',
+        targetEntity: Booking::class)]
     // this side of the relation will probably be useful to get a history of past bookings
     private Collection $bookings;
 
