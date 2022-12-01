@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -10,7 +12,11 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils): Response
+    public function index(
+        AuthenticationUtils $authenticationUtils,
+        RequestStack $requestStack,
+        UserRepository $userRepository
+    ): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -19,12 +25,20 @@ class LoginController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
 
-        // GET LAST REGISTERED USER
-        $newUser = $userRepository->findBy(array(), array('id' => 'DESC', 1, 0));
+        // GET USER FROM LOGIN
+        $user = $userRepository->findByName($lastUsername);
 
-        return $this->render('login/index.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
-        ]);
+        // GETTING SESSION
+        $session = $requestStack->getSession();
+
+        // FILL SESSION WITH 1 INFORMATION : USER ID
+        if (!$session->has('idUser')) {
+            $session->set('idUser', $user[0]->getId());
+
+            return $this->render('login/index.html.twig', [
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            ]);
+        }
     }
 }

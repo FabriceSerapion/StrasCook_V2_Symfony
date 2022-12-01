@@ -2,11 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use App\Repository\BookingRepository;
-use App\Repository\MenuRepository;
 use App\Repository\UserRatingRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,24 +16,22 @@ class UserController extends AbstractController
         BookingRepository $bookingRepository,
         RequestStack $requestStack,
         UserRatingRepository $userRatingRepository,
-        User $user
     ): Response
     {
         // GETTING SESSION 
         $session = $requestStack->getSession();
 
         // GETTING USER ID
-        $session->get($idUser);
-
-
+        $idUser = ($session->get('idUser'));
+        
         // GET ALL FUTURE BOOKINGS
         // TODO check how to access idUser inside the parameter
-        $bookings = $bookingRepository->findAllBookings(idUser : $user->getId());
+        $bookings = $bookingRepository->findAllBookings(idUser : $idUser);
 
         // GET ALL DISTINCT BOOKED MENUS
-        $bookedMenus = $bookingRepository->findAllMenuBooked($user->getId());
+        $bookedMenus = $bookingRepository->findAllMenuBooked($idUser);
         foreach ($bookedMenus as $idx => $bookedMenu) {
-            $noted = $userRatingRepository->findNoteFromMenuAndUser($bookedMenu->getId(), $user->getId());
+            $noted = $userRatingRepository->findNoteFromMenuAndUser($bookedMenu->getId(), $idUser);
             if (!empty($noted)) {
                 $bookedMenus[$idx]->setRating($noted->getRating());
             } else {
