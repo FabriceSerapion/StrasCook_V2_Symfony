@@ -24,8 +24,16 @@ class HomeController extends AbstractController
             }
             $menus[$idx]->setTotalRatings($ratings[0]["totalRatings"]);
         }
-        return $this->render('home/index.html.twig', [
-            'menus' => $menus,
-        ]);
+
+        $adress = '';
+        $date = '';
+        $time = '';
+        //PUSH DATAS IN TWIG
+        $data = ['menus' => $menus];
+        $data['adress'] = $adress;
+        $data['date'] = $date;
+        $data['time'] = $time;
+
+        return $this->render('home/index.html.twig', $data);
     }
 }

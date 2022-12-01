@@ -41,14 +41,16 @@ class CookRepository extends ServiceEntityRepository
     /**
      * Get all row from database.
      */
-    public function selectAnId(int $hour): Cook|bool
+    public function findOneByHour(int $hour): Cook|null
     {
-        $query = $this->createQueryBuilder('c')
+        return $this->createQueryBuilder('c')
             ->where('c.shift_start >= :hour')
             ->andWhere('c.shift_end < :hour')
             ->setParameter('hour', $hour)
-            ->setMaxResults(1);
-            return $this->getQuery()->getResult();
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+    ;
     }
     //    /**
 //     * @return Cook[] Returns an array of Cook objects

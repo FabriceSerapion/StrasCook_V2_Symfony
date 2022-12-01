@@ -11,12 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[Route('/menu')]
 class MenuController extends AbstractController
 {
     #[Route('/', name: 'app_menu_index', methods: ['GET'])]
-    public function index(MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
+    public function index(RequestStack $requestStack, MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
     {
         $menus = $menuRepository->findAll();
         foreach ($menus as $idx => $menu) {
@@ -30,6 +31,15 @@ class MenuController extends AbstractController
 
         $data = ['menus' => $menus];
         $data['tag'] = '';
+
+        // GETTING SESSION 
+        $session = $requestStack->getSession();
+
+        if ($session->has('time')) {         
+            $data['session'] = $session->get('time');
+        } else {
+            $data['session'] = '';
+        }
 
         return $this->render('menu/index.html.twig', $data);
     }
@@ -60,13 +70,21 @@ class MenuController extends AbstractController
     }
 
     #[Route('/new', name: 'app_menu_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MenuRepository $menuRepository): Response
+    public function new(Request $request, MenuRepository $menuRepository, TagRepository $tagRepository): Response
     {
         $menu = new Menu();
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $newTags = explode(' ', $_POST['tagsArea']);
+
+            foreach ($newTags as $newTag) {
+                $tagExist = $tagRepository->findOneByName($newTag);
+                $menu->addTag($tagExist);
+            }
+
             $menuRepository->save($menu, true);
 
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
@@ -87,12 +105,38 @@ class MenuController extends AbstractController
     // }
 
     #[Route('/{id}/edit', name: 'app_menu_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Menu $menu, MenuRepository $menuRepository): Response
+    public function edit(Request $request, Menu $menu, MenuRepository $menuRepository, TagRepository $tagRepository): Response
     {
+        $tagsArea = '';
+        foreach ($menu->tags as $tag) {
+            $tagsArea = $tagsArea . ' ' . $tag->getName();
+        }
+
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $newTags = explode(' ', $tagsArea);
+
+            if ($tagsArea != $menu->getTagsArea()) {
+                $oldTags = explode(' ', $menu->getTagsArea());
+                //Adding tags if new tags are found
+                foreach ($newTags as $newTag) {
+                    if (!in_array($newTag, $oldTags)) {
+                        $tagExist = $tagRepository->findOneByName($newTag);
+                        $menu->addTag($tagExist);
+                    }
+                }
+                //Deleting tags if there are not found
+                foreach ($oldTags as $oldTag) {
+                    if (!in_array($oldTag, $newTags)) {
+                        $tagExist = $tagRepository->findOneByName($newTag);
+                        $menu->removeTag($tagExist);
+                    }
+                }
+            }
+
             $menuRepository->save($menu, true);
 
             return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
