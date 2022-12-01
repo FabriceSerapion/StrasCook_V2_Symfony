@@ -21,7 +21,7 @@ class AdminController extends AbstractController
 
         //GET ALL TAGS
         $tags = $tagRepository->findBy(array(), array('name' => 'ASC'));
-      
+
         //LINK TAGS WITH MENUS
         foreach ($menus as $idx => $menu) {
             $tagsLinked = $tagRepository->findTagsFromMenu($menu->getId());
@@ -36,7 +36,7 @@ class AdminController extends AbstractController
         //GET ALL FUTURE BOOKS
         $date = date('Y-m-d');
         $bookings = $bookingRepository->findBy(array(), array('date' => 'ASC'), 5, 0);
-        
+
         //PUSH DATAS IN TWIG
         $data = ['menus' => $menus];
         $data['tags'] = $tags;

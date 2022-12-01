@@ -35,3 +35,7 @@ button {
   padding-right: 5px;
   border-radius: 5px;
 }
+
+.number_ratings {
+  font-size: 15px;
+}
