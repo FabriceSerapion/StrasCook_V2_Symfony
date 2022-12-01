@@ -30,38 +30,39 @@ class BookingRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAll(
+    public function findAllBookings(
         int $limit = 0,
         string $orderBy = '',
         string $direction = 'ASC',
         int $idUser = 0,
         string $bookingDate = ''
-    ): Booking {
+    ): array {
         $query = $this->createQueryBuilder('b')
-            ->select('b','c.firstname','m.name')
+            ->select('b', 'b.date', 'b.time', 'b.adress', 'b.quantity', 'b.price', 'c.firstname','m.name')
             ->innerJoin('b.cook','c')
             ->leftJoin('b.menu','m');
             if ($idUser > 0) {
-                $query=$this
-                ->andWhere('b.id_user = :idUser')
+                $query 
+                ->andWhere('b.customer = :idUser')
                 ->setParameter('idUser', $idUser);
             }
             if ($bookingDate) {
-                $query=$this
+                $query 
                 ->andwhere('b.date_booking > :bookingDate')
                 ->setParameter('bookingDate', $bookingDate);
             }
             if ($orderBy) {
-                $query=$this
+                $query 
                 ->orderBy($orderBy, $direction);
             }
             if ($limit > 0) {
-                $query=$this
-                 ->setMaxResults($limit);
+                $query 
+                ->setMaxResults($limit);
             }
-        return $this->getQuery()
+        return $query->getQuery()
            ->getResult();
     }
+
     public function findLastId(int $idUser): Booking|false
     {
         return $this->createQueryBuilder('b')
@@ -70,6 +71,21 @@ class BookingRepository extends ServiceEntityRepository
             ->setParameter('idUser', $idUser)
             ->getQuery()
             ->getResult()
+    ;
+    }
+
+     /**
+     * Get all ratings for one user from database by ID.
+     */
+    public function findAllMenuBooked(int $idUser): array|false
+    {
+    return $this->createQueryBuilder('b')
+        ->innerJoin('b.menu','m')
+        ->select('DISTINCT m.name, m.rating, m.id')
+        ->where('b.customer = :idUser')
+        ->setParameter('idUser', $idUser)
+        ->getQuery()
+        ->getResult()
     ;
     }
 
