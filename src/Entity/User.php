@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -18,39 +19,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(
-        type: 'string',
-        length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Assert\NotBlank(
-        message: 'Le nom d\'utilisateur est nécessaire !')]
+        message: 'Le nom d\'utilisateur est nécessaire !'
+    )]
     #[Assert\Length(
         max: 255,
-        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
+        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.'
+    )]
     private ?string $username = null;
-
-    #[ORM\Column(
-        type: 'string',
-        length: 255)]
-    #[Assert\NotBlank(
-        message: 'Le mot de passe est nécessaire !')]
-    #[Assert\Length(
-        max: 255,
-        maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
-    private ?string $password = null;
-
-    #[ORM\Column(
-        type: Types::BOOLEAN,
-        nullable: true)]
-    private ?bool $isAdmin = null;
-
-    #[ORM\OneToMany(
-        mappedBy: 'customer',
-        targetEntity: Booking::class)]
-    // this side of the relation will probably be useful to get a history of past bookings
-    private Collection $bookings;
-
-    #[ORM\OneToMany(mappedBy: 'customer', targetEntity: UserRating::class)]
-    private Collection $ratings;
 
     #[ORM\Column]
     private array $roles = [];
@@ -58,8 +35,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'string', length: 255)]
+    // ! this validation cause issue, this is why it is commented for now
+    // #[Assert\NotBlank(message: 'Le nom d\'utilisateur est nécessaire !')]
+    #[Assert\Length(max: 255, maxMessage: '{{ value }} est trop long, veuillez entrer maximum {{ limit }} caractères.')]
     private ?string $password = null;
+
+    #[ORM\OneToMany(
+        mappedBy: 'customer',
+        targetEntity: Booking::class
+    )]
+    // this side of the relation will probably be useful to get a history of past bookings
+    private Collection $bookings;
+
+    #[ORM\OneToMany(
+        mappedBy: 'customer',
+        targetEntity: UserRating::class
+    )]
+    private Collection $ratings;
 
     public function getId(): ?int
     {
@@ -129,5 +122,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBooking(): Collection
+    {
+        return $this->bookings;
+    }
+
+    /**
+     * @return Collection<int, UserRating>
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
     }
 }

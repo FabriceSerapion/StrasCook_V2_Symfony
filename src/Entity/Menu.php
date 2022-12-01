@@ -251,18 +251,6 @@ class Menu
         return $this->ratings;
     }
 
-    public function getTotalRatings(): ?int
-    {
-        return $this->totalRatings;
-    }
-
-    public function setTotalRatings(?int $totalRatings): self
-    {
-        $this->totalRatings = $totalRatings;
-
-        return $this;
-    }
-
     public function getTagsArea(): ?int
     {
         return $this->tagsArea;
