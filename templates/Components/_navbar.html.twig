@@ -12,7 +12,12 @@
 				<a class="nav-link d-flex justify-content-end" href="/menu">MENUS</a>
 				<a class="nav-link d-flex justify-content-end" href="/about">À PROPOS</a>
 
-				{% if app.user.username is defined %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<a class="nav-link d-flex justify-content-end" href="/admin">
+						ESPACE ADMINISTRATEUR
+					</a>
+					<a class="mt-1" href="/logout">logout</a>
+				{% elseif app.user.username is defined %}
 					<a class="nav-link d-flex justify-content-end" href="/user">
 						ESPACE PARTICULIER
 					</a>
