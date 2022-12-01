@@ -78,7 +78,9 @@ class MenuController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $newTags = explode(' ', $_POST['tagsArea']);
+            $menuTAGS = $_POST["menu"];
+            // var_dump($menu);die();
+            $newTags = explode(' ', $menuTAGS['tagsArea']);
 
             foreach ($newTags as $newTag) {
                 $tagExist = $tagRepository->findOneByName($newTag);
@@ -108,33 +110,43 @@ class MenuController extends AbstractController
     public function edit(Request $request, Menu $menu, MenuRepository $menuRepository, TagRepository $tagRepository): Response
     {
         $tagsArea = '';
-        foreach ($menu->tags as $tag) {
+        foreach ($menu->getTags() as $tag) {
             $tagsArea = $tagsArea . ' ' . $tag->getName();
         }
+        $menu->setTagsArea($tagsArea);
 
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $newTags = explode(' ', $tagsArea);
-
-            if ($tagsArea != $menu->getTagsArea()) {
-                $oldTags = explode(' ', $menu->getTagsArea());
-                //Adding tags if new tags are found
-                foreach ($newTags as $newTag) {
-                    if (!in_array($newTag, $oldTags)) {
-                        $tagExist = $tagRepository->findOneByName($newTag);
-                        $menu->addTag($tagExist);
+            if ($menu->getTagsArea()) {
+                $newTags = explode(' ', $menu->getTagsArea());
+        
+                if ($tagsArea != $menu->getTagsArea()) {
+                    
+                    $oldTags = explode(' ', $tagsArea);
+                    //Adding tags if new tags are found
+                    foreach ($newTags as $newTag) {
+                        
+                        if (!in_array($newTag, $oldTags)) {
+                            
+                            $tagExist = $tagRepository->findOneByName($newTag);
+                            if ($tagExist) {                           
+                                $menu->addTag($tagExist);
+                            }
+                        }
                     }
-                }
-                //Deleting tags if there are not found
-                foreach ($oldTags as $oldTag) {
-                    if (!in_array($oldTag, $newTags)) {
-                        $tagExist = $tagRepository->findOneByName($newTag);
-                        $menu->removeTag($tagExist);
+                    //Deleting tags if there are not found
+                    foreach ($oldTags as $oldTag) {
+                        if (!in_array($oldTag, $newTags)) {
+                            $tagExist = $tagRepository->findOneByName($oldTag);
+                            if ($tagExist) {
+                                $menu->removeTag($tagExist);
+                            }
+                        }
                     }
-                }
+                }   
             }
 
             $menuRepository->save($menu, true);
