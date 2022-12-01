@@ -87,6 +87,8 @@ class Menu
 
     private ?string $tagsArea;
 
+    private ?int $userRating;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -259,6 +261,18 @@ class Menu
     public function setTagsArea(?int $tagsArea): self
     {
         $this->tagsArea = $tagsArea;
+
+        return $this;
+    }
+
+    public function getUserRating(): ?int
+    {
+        return $this->userRating;
+    }
+
+    public function setUserRating(?int $userRating): self
+    {
+        $this->userRating = $userRating;
 
         return $this;
     }

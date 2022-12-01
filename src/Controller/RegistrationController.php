@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
             // do anything else you need here, like send an email
 
             // GET LAST REGISTERED USER
-            $newUser = $userRepository->findBy(array(), array('id' => 'DESC', 1, 0));
+            $newUser = $userRepository->findBy(array(), array('id' => 'DESC'), 1, 0);
 
             // GETTING SESSION 
             $session = $requestStack->getSession();

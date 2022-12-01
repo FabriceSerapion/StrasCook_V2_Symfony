@@ -31,14 +31,16 @@ class LoginController extends AbstractController
         // GETTING SESSION
         $session = $requestStack->getSession();
 
-        // FILL SESSION WITH 1 INFORMATION : USER ID
-        if (!$session->has('idUser')) {
+        // FILL SESSION WITH USER INFORMATIONS
+        if (!$session->has('idUser') && $user) {
             $session->set('idUser', $user[0]->getId());
+            $session->set('username', $user[0]->getUsername());
+        }
 
             return $this->render('login/index.html.twig', [
                 'last_username' => $lastUsername,
                 'error'         => $error,
             ]);
-        }
+        
     }
 }

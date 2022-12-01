@@ -24,11 +24,13 @@
 				</tr>
 				{% for booking in bookings %}
 					<tr>
-						<td>{{ booking.date }}</td>
+						<td>{{ booking.date|date('d-m-Y') }}</td>
 						<td>{{ booking.time }}</td>
 						<td>{{ booking.adress}}</td>
-						<td>{{ booking.cook.firstname }}</td>
-						<td>{{ booking.menu.name }}</td>
+						<td>{{ booking.firstname }}</td>
+						{# Gives the booking.cook.firstname #}
+						<td>{{ booking.name }}</td>
+						{# Gives booking.menu.name #}
 						<td>{{ booking.quantity }}</td>
 						<td>{{ booking.price }}€</td>
 					</tr>
@@ -43,14 +45,14 @@
 					<th scope='col'>Note de l'utilisateur</th>
 					<th scope='col'>Modification</th>
 				</tr>
-				{% for rating in ratings %}
-					{% if user_rating.rating != '' %}
+				{% for menu in menus %}
+					{% if menu.userRating != '' %}a
 						<tr>
-							<td>{{ user_rating.menu.name }}</td>
-							<td>{{ user_rating.menu.rating }}</td>
-							<td>{{ user_rating.rating }}</td>
+							<td>{{ menu.name }}</td>
+							<td>{{ menu.rating }}</td>
+							<td>{{ menu.userRating }}</td>
 							<td>
-								<a href="{{ path('app_user_rating_edit', { 'id': user_rating.id }) }}">Modifier la note</a>
+								<a href="{{ path('app_user_rating_edit', { 'id': menu.userRating }) }}">Modifier la note</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -64,13 +66,13 @@
 					<th scope='col'>Note globale du menu</th>
 					<th scope='col'>Ajout</th>
 				</tr>
-				{% for rating in ratings %}
-					{% if user_rating.rating is null or user_rating.rating is empty %}
+				{% for menu in menus %}
+					{% if menu.userRating is null or menu.userRating is empty %}
 						<tr>
-							<td>{{ user_rating.menu.name }}</td>
-							<td>{{ user_rating.menu.rating }}</td>
+							<td>{{ menu.name }}</td>
+							<td>{{ menu.rating }}</td>
 							<td>
-								<a href="{{ path('app_user_rating_new') }}">Ajouter une note !</a>
+								<a href="{{ path('app_user_rating_new', { 'menu_id' : menu.id }) }}">Ajouter une note !</a>
 							</td>
 						</tr>
 
