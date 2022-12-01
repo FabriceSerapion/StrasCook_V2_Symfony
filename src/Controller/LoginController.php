@@ -26,7 +26,7 @@ class LoginController extends AbstractController
 
 
         // GET USER FROM LOGIN
-        $user = $userRepository->findByName($lastUsername);
+        $user = $userRepository->findByUsername($lastUsername);
 
         // GETTING SESSION
         $session = $requestStack->getSession();
