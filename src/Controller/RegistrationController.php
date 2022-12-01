@@ -34,6 +34,9 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
 
+            // GET LAST REGISTERED USER
+            $newUser = $userRepository->findBy(array(), array('id' => 'DESC', 1, 0));
+
             return $this->redirectToRoute('app_home');
         }
 

@@ -30,7 +30,7 @@ class BookingRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAll(
+    public function findAllBookings(
         int $limit = 0,
         string $orderBy = '',
         string $direction = 'ASC',
@@ -62,6 +62,7 @@ class BookingRepository extends ServiceEntityRepository
         return $this->getQuery()
            ->getResult();
     }
+
     public function findLastId(int $idUser): Booking|false
     {
         return $this->createQueryBuilder('b')
@@ -70,6 +71,21 @@ class BookingRepository extends ServiceEntityRepository
             ->setParameter('idUser', $idUser)
             ->getQuery()
             ->getResult()
+    ;
+    }
+
+     /**
+     * Get all ratings for one user from database by ID.
+     */
+    public function findAllMenuBooked(int $idUser): array|false
+    {
+    return $this->createQueryBuilder('b')
+        ->innerJoin('b.menu','m')
+        ->select('DISTINCT m')
+        ->where('b.customer = :idUser')
+        ->setParameter('idUser', $idUser)
+        ->getQuery()
+        ->getResult()
     ;
     }
 
