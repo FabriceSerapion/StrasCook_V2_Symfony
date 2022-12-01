@@ -14,57 +14,38 @@
 
 	{# TODO: This form has to be replaced by BookingType available in Form folder #}
 	{# {% include 'booking/new.html.twig' %} #}
-	{# <div id="form-line">
-																										<div class="container">
-																											<form class="pt-2" action="/booking?adress={{ adress }}&date={{ date }}&hour={{ hour }}&benefit={{ benefit }}" method="GET">
-																												<div class="row">
-																													<div class="col">
-																														<label for="adress" class="text-white">RÉSERVÉ À
-																														</label><br/>
-																														<input type="text" class="form-control" value="{{ adress }}" id="adress" name="adress" placeholder="Adresse, Code postal, ville..." required pattern="([0-9]*) ?([a-zA-Z,'\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)">
-																														<p>
-																															{% if errors['adress1'] %}
-																																{{errors['adress1']}}
-																															{% endif %}
-																														</p>
-																													</div>
-																													<div class="col">
-																														<label for="date" class="text-white">LE</label><br/>
-																														<input type="date" class="form-control" value="{{ date }}" id="date" name="date" placeholder="Date" required>
-																														<p>
-																															{% if errors['date1'] %}
-																																{{errors['date1']}}
-																															{% endif %}
-																														</p>
-																													</div>
-																													<div class="col">
-																														<label for="hour" class="text-white">À</label><br/>
-																														<input type="time" class="form-control" value="{{ hour }}" id="hour" name="hour" placeholder="Heure" required>
-																														<p>
-																															{% if errors['hour1'] %}
-																																{{errors['hour1']}}
-																															{% endif %}
-																														</p>
-																													</div>
-																													<div class="col">
-																														<label for="benefit" class="text-white">Type de prestation</label><br/>
-																														<select id="benefit" class="form-control" name="benefit" value="{{ benefit }}">
-																															<option value="">--Faites votre choix--</option>
-																															<option value="dinner">Dîner</option>
-																														</select>
-																														<p>
-																															{% if errors['benefit1'] %}
-																																{{errors['benefit1']}}
-																															{% endif %}
-																														</p>
-																													</div>
-																													<div type="button" class="col">
-																														<button type="submit" class="btn btn-light mt-2">Validez votre choix</button>
-																													</div>
-																												</div>
-																											</form>
-																										</div>
-																									</div> #}
+	<div id="form-line">
+		<div class="container">
+			{# <form class="pt-2" action="/booking?adress={{ adress }}&date={{ date }}&hour={{ hour }}&benefit={{ benefit }}" method="GET"> #}
+			<form action="{{ path("app_booking_newPT1") }}" method="POST">
+				<div class="row">
+					<div class="col">
+						<label for="adress" class="text-white">RÉSERVÉ À
+						</label><br/>
+						<input type="text" class="form-control" value="{{ adress }}" id="adress" name="adress" placeholder="Adresse, Code postal, ville..." required pattern="([0-9]*) ?([a-zA-Z,'\. ]*) ?([0-9]{5}) ?([a-zA-Z]*)">
+					</div>
+					<div class="col">
+						<label for="date" class="text-white">LE</label><br/>
+						<input type="date" class="form-control" value="{{ date }}" id="date" name="date" placeholder="Date" required>
+					</div>
+					<div class="col">
+						<label for="hour" class="text-white">À</label><br/>
+						<input type="time" class="form-control" value="{{ time }}" id="time" name="time" placeholder="Heure" required>
+					</div>
+					<div class="col">
+						<label for="benefit" class="text-white">Type de prestation</label><br/>
+						<select id="benefit" class="form-control" name="benefit">
+							<option value="">--Faites votre choix--</option>
+							<option value="dinner">Dîner</option>
+						</select>
+					</div>
+					<div type="button" class="col">
+						<button type="submit" class="btn btn-light mt-2">Validez votre choix</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
 	{# display of three menus only for home page #}
 
