@@ -44,8 +44,8 @@ class CookRepository extends ServiceEntityRepository
     public function findOneByHour(int $hour): Cook|null
     {
         return $this->createQueryBuilder('c')
-            ->where('c.shift_start >= :hour')
-            ->andWhere('c.shift_end < :hour')
+            ->where('c.shift_start <= :hour')
+            ->andWhere('c.shift_end > :hour')
             ->setParameter('hour', $hour)
             ->setMaxResults(1)
             ->getQuery()
