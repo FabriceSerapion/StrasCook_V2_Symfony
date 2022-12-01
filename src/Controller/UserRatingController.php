@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Menu;
+use App\Entity\User;
 use App\Entity\UserRating;
 use App\Form\UserRatingType;
+use App\Repository\MenuRepository;
 use App\Repository\UserRatingRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,16 +27,37 @@ class UserRatingController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_rating_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UserRatingRepository $userRatingRepository): Response
+    public function new(
+        MenuRepository $menuRepository,
+        Request $request,
+        RequestStack $requestStack,
+        UserRepository $userRepository,
+        UserRatingRepository $userRatingRepository): Response
     {
+        var_dump($_GET);
+        // GETTING SESSION 
+        $session = $requestStack->getSession();
+
+        // GETTING USER ID
+        $idUser = ($session->get('idUser'));
+
+        // GETTING THIS USER FROM ID
+        $user = $userRepository->findById($session->get('idUser'));
+
         $userRating = new UserRating();
         $form = $this->createForm(UserRatingType::class, $userRating);
         $form->handleRequest($request);
 
+        $userRating->setCustomer($user[0]);
+
+        $menu = $menuRepository->findById($_GET['menu_id']);
+
+        $userRating->setMenu($menu[0]);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $userRatingRepository->save($userRating, true);
 
-            return $this->redirectToRoute('app_user_rating_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_rating/new.html.twig', [
@@ -49,7 +75,9 @@ class UserRatingController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_rating_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, UserRating $userRating, UserRatingRepository $userRatingRepository): Response
+    public function edit(Request $request,
+    UserRating $userRating,
+    UserRatingRepository $userRatingRepository): Response
     {
         $form = $this->createForm(UserRatingType::class, $userRating);
         $form->handleRequest($request);
@@ -67,7 +95,9 @@ class UserRatingController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_user_rating_delete', methods: ['POST'])]
-    public function delete(Request $request, UserRating $userRating, UserRatingRepository $userRatingRepository): Response
+    public function delete(Request $request,
+    UserRating $userRating,
+    UserRatingRepository $userRatingRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$userRating->getId(), $request->request->get('_token'))) {
             $userRatingRepository->remove($userRating, true);

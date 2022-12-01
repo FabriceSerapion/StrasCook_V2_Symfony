@@ -13,8 +13,8 @@ class UserRatingType extends AbstractType
     {
         $builder
             ->add('rating')
-            ->add('customer')
-            ->add('menu')
+            // ->add('customer')
+            // ->add('menu')
         ;
     }
 
