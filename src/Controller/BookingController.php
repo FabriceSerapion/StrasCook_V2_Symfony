@@ -8,6 +8,7 @@ use App\Form\BookingType;
 use App\Repository\BookingRepository;
 use App\Repository\CookRepository;
 use App\Repository\MenuRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,22 +53,22 @@ class BookingController extends AbstractController
     #[Route('/newPT1', name: 'app_booking_newPT1', methods: ['POST'])]
     public function newPT1(RequestStack $requestStack): Response
     {
-        // MODIFYING INFORMATIONS
-        $datenew = DateTime::createFromFormat("Y-m-d", $_POST['date']);
-        $intTime = intval($_POST['time']);
-
         // CREATE SESSION 
         $session = $requestStack->getSession();
 
         // FILL SESSION WITH 3 INFORMATIONS : ADRESS + DATE + HOUR
-        if (!$session->has('adress')) {
-            $session->set('adress', $_POST['adress']);
-        }
-        if (!$session->has('date')) {
-            $session->set('date', $datenew);
-        }
-        if (!$session->has('time')) {
-            $session->set('time', $intTime);
+        $session->set('adress', $_POST['adress']);
+
+        // $session->set('date', $datenew);
+        $session->set('date', $_POST['date']);
+
+        // $session->set('time', $intTime);
+        $session->set('time', $_POST['time']);
+
+        if (!$session->get('idUser')) {
+            return $this->redirectToRoute('app_login');
+        } else {
+            return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
@@ -79,11 +80,15 @@ class BookingController extends AbstractController
         // GETTING SESSION 
         $session = $requestStack->getSession();
 
+        // MODIFYING INFORMATIONS
+        $datenew = DateTime::createFromFormat("Y-m-d", $session->get('date'));
+        $intTime = intval($session->get('time'));
+
         // FILL BOOKING WITH SESSION INFORMATIONS
         $booking = new Booking();
         $booking->setAdress($session->get('adress'));
-        $booking->setDate($session->get('date'));
-        $booking->setTime($session->get('time'));
+        $booking->setDate($datenew);
+        $booking->setTime($intTime);
         
         // FILL BOOKING WITH MENU CHOOSED
         $menu = $menuRepository->findOneById($_POST['id']);
@@ -102,16 +107,20 @@ class BookingController extends AbstractController
     }
 
     #[Route('/newPT3', name: 'app_booking_newPT3', methods: ['POST'])]
-    public function newPT3(RequestStack $requestStack, Request $request, MenuRepository $menuRepository, CookRepository $cookRepository, BookingRepository $bookingRepository): Response
+    public function newPT3(RequestStack $requestStack, Request $request, MenuRepository $menuRepository, CookRepository $cookRepository, BookingRepository $bookingRepository, UserRepository $userRepository): Response
     {
         // GETTING SESSION 
         $session = $requestStack->getSession();
 
+        // MODIFYING INFORMATIONS
+        $datenew = DateTime::createFromFormat("Y-m-d", $session->get('date'));
+        $intTime = intval($session->get('time'));
+
         // CREATE AND FILL BOOKING WITH SESSION INFORMATIONS
         $booking = new Booking();
         $booking->setAdress($session->get('adress'));
-        $booking->setDate($session->get('date'));
-        $booking->setTime($session->get('time'));
+        $booking->setDate($datenew);
+        $booking->setTime($intTime);
 
         // FILL BOOKING WITH 1 INFORMATION : QUANTITY
         $booking->setQuantity($_POST['quantity']);
@@ -121,16 +130,16 @@ class BookingController extends AbstractController
         $booking->setMenu($menu);
 
         // FILL BOOKING WITH COOK CHOOSED
-        $cook = $cookRepository->findOneByHour($session->get('time'));
+        $cook = $cookRepository->findOneByHour($intTime);
         $booking->setCook($cook);
 
         // FILL BOOKING WITH PRICE
         $booking->setPrice($this->pricePrestation + ($menu->getPrice() * $booking->getQuantity()));
 
-        $form = $this->createForm(BookingType::class, $booking);
-        $form->handleRequest($request);
+        $user = $userRepository->findByUsername($session->get('username'));
+        $booking->setCustomer($user[0]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($cook) {
             $bookingRepository->save($booking, true);
 
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);

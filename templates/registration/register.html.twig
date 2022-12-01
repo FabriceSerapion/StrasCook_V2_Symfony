@@ -12,14 +12,17 @@
 			<div class="mb-3">
 				{{ form_label(registrationForm.username, 'Nom d\'utilisateur', {'attr': {'class': 'form-label'}}) }}
 				{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.username) }}
 			</div>
 			<div class="mb-3">
-					{{ form_label(registrationForm.username, 'Mot de passe', {'attr': {'class': 'form-label'}}) }}
+					{{ form_label(registrationForm.plainPassword, 'Mot de passe', {'attr': {'class': 'form-label'}}) }}
 					{{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+					{{ form_errors(registrationForm.plainPassword) }}
 			</div>
 			<div class="mb-3">
 				{{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-label'}}) }}
 				{{ form_label(registrationForm.agreeTerms, 'Acceptez les conditions', {'attr': {'class': 'form-control'}}) }}
+				{{ form_errors(registrationForm.agreeTerms) }}
 			</div>
 			<button type="submit" class="w-100 btn btn-lg btn-primary">S'inscrire</button>
 				{{ form_end(registrationForm) }}
