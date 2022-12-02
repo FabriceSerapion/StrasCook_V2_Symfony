@@ -13,10 +13,8 @@
 	</section>
 
 	{# form to allow client to make a booking #}
-
-	{# TODO: This form has to be replaced by BookingType available in Form folder #}
-	{# {% include 'booking/new.html.twig' %} #}
-		<div id="form-line"> <div
+	<div class="bg font-weight-bold text-white p-4" style="background-color:#b18d75">
+		<div
 			class="container">
 			{# <form class="pt-2" action="/booking?adress={{ adress }}&date={{ date }}&hour={{ hour }}&benefit={{ benefit }}" method="GET"> #}
 			<form action="{{ path("app_booking_newPT1") }}" method="POST">
@@ -42,7 +40,7 @@
 						</select>
 					</div>
 					<div type="button" class="col">
-						<button type="submit" class="btn btn-light mt-2">Validez votre choix</button>
+						<button type="submit" class="btn btn-lg text-white " style="background-color:#864e29">Validez votre choix</button>
 					</div>
 				</div>
 			</form>

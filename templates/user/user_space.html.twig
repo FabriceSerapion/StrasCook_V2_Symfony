@@ -1,13 +1,14 @@
 {% extends 'layout.html.twig' %}
 
-{% block stylesheet %}
-	<link rel="stylesheet" href="{{ asset('assets/css/user.css') }}">
+{% block stylesheets %}
+	{{ encore_entry_link_tags('user') }}
 {% endblock %}
+
 
 {% block content %}
 	<main>
 		<div class="header">
-			<img rel="icon" src="{{ asset('assets/images/favicon.ico') }}"/>
+			<img rel="icon" src="{{ asset('build/Logo_strascook.png') }}"/>
 			<h1>Espace Particulier</h1>
 		</div>
 		<div class="bg-image" style="background-image: url('assets/images/user.jpg')">
