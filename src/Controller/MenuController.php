@@ -48,7 +48,7 @@ class MenuController extends AbstractController
      * Show informations --> menus with their tags linked, search by tag
      */
     #[Route('/showtag', name: 'app_menu_show', methods: ['POST'])]
-    public function showMenus(MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
+    public function showMenus(RequestStack $requestStack, MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
     {
         //Validation --> tag must be string
         $tagValidated = trim(htmlspecialchars($_POST['tag']));
@@ -65,6 +65,15 @@ class MenuController extends AbstractController
 
         $data = ['menus' => $menus];
         $data['tag'] = $_POST['tag'];
+
+        // GETTING SESSION 
+        $session = $requestStack->getSession();
+
+        if ($session->has('time')) {         
+            $data['session'] = $session->get('time');
+        } else {
+            $data['session'] = '';
+        }
 
         return $this->render('menu/index.html.twig', $data);
     }
