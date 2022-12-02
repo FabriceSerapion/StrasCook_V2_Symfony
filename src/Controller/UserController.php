@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\UserRating;
 use App\Repository\BookingRepository;
 use App\Repository\MenuRepository;
 use App\Repository\UserRatingRepository;
@@ -28,7 +29,6 @@ class UserController extends AbstractController
         
         // GET ALL FUTURE BOOKINGS
         $bookings = $bookingRepository->findAllBookings(idUser : $idUser);
-        
 
         // GET ALL DISTINCT BOOKED MENUS
         $bookedMenus = $bookingRepository->findAllMenuBooked($idUser);
@@ -39,9 +39,12 @@ class UserController extends AbstractController
             $menu = $menuRepository->findOneBy($bookedMenu);
             if (!empty($noted)) {
                 // SET THE USER RATING ON THE MENU
-                $menu->setUserRating($noted[0]['rating']);
+                $userRating = $userRatingRepository->findOneById($noted[0]['id']);
+                $menu->setUserRating($userRating);
             } else {
-                $menu->setUserRating(null);
+                $userRating = new UserRating();
+                $userRating->setRating(0);
+                $menu->setUserRating($userRating);
             }
             array_push($menus, $menu);
         };

@@ -24,23 +24,10 @@ class LoginController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-
-        // GET USER FROM LOGIN
-        $user = $userRepository->findByUsername($lastUsername);
-
-        // GETTING SESSION
-        $session = $requestStack->getSession();
-
-        // FILL SESSION WITH USER INFORMATIONS
-        if (!$session->has('idUser') && $user) {
-            $session->set('idUser', $user[0]->getId());
-            $session->set('username', $user[0]->getUsername());
-        }
-
-            return $this->render('login/index.html.twig', [
-                'last_username' => $lastUsername,
-                'error'         => $error,
-            ]);
+        return $this->render('login/index.html.twig', [
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ]);
         
     }
 }

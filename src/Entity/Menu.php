@@ -87,7 +87,7 @@ class Menu
 
     private ?string $tagsArea;
 
-    private ?int $userRating;
+    private UserRating $userRating;
 
     public function __construct()
     {
@@ -265,12 +265,12 @@ class Menu
         return $this;
     }
 
-    public function getUserRating(): ?int
+    public function getUserRating(): UserRating
     {
         return $this->userRating;
     }
 
-    public function setUserRating(?int $userRating): self
+    public function setUserRating(UserRating $userRating): self
     {
         $this->userRating = $userRating;
 

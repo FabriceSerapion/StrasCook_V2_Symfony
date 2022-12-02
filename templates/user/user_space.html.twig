@@ -46,13 +46,13 @@
 					<th scope='col'>Modification</th>
 				</tr>
 				{% for menu in menus %}
-					{% if menu.userRating != '' %}a
+					{% if menu.userRating.rating != 0 %}a
 						<tr>
 							<td>{{ menu.name }}</td>
 							<td>{{ menu.rating }}</td>
-							<td>{{ menu.userRating }}</td>
+							<td>{{ menu.userRating.rating }}</td>
 							<td>
-								<a href="{{ path('app_user_rating_edit', { 'id': menu.userRating }) }}">Modifier la note</a>
+								<a href="{{ path('app_user_rating_edit', { 'id': menu.userRating.id }) }}">Modifier la note</a>
 							</td>
 						</tr>
 					{% endif %}
@@ -67,7 +67,7 @@
 					<th scope='col'>Ajout</th>
 				</tr>
 				{% for menu in menus %}
-					{% if menu.userRating is null or menu.userRating is empty %}
+					{% if menu.userRating.rating == 0 %}
 						<tr>
 							<td>{{ menu.name }}</td>
 							<td>{{ menu.rating }}</td>

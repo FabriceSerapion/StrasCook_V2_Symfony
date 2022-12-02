@@ -58,7 +58,7 @@ class UserRatingRepository extends ServiceEntityRepository
    public function findNoteFromMenuAndUser(int $idMenu, int $idCustomer): array|null
    {
     return $this->createQueryBuilder('u')
-    ->select('u.rating')
+    ->select('u.rating, u.id')
     ->innerJoin('u.menu', 'm')
     ->innerJoin('u.customer', 'c')
     ->where('m.id = :idMenu')

@@ -88,7 +88,7 @@ class Booking
         max: 23,
         notInRangeMessage: 'Veuillez indiquer une heure, de 00 à 23.'
     )]
-    private ?int $time = null;
+    private ?string $time = null;
 
     private int $rating;
 
@@ -183,10 +183,10 @@ class Booking
 
     public function getTime(): ?string
     {
-        return $this->date->format('H:i');
+        return $this->time;
     }
 
-    public function setTime(int $time): self
+    public function setTime(string $time): self
     {
         $this->time = $time;
 

@@ -84,12 +84,17 @@ class MenuController extends AbstractController
 
             foreach ($newTags as $newTag) {
                 $tagExist = $tagRepository->findOneByName($newTag);
-                $menu->addTag($tagExist);
+                if ($tagExist) {
+                    $menu->addTag($tagExist);
+                }
             }
 
-            $menuRepository->save($menu, true);
+            if($this->checkDuplicate($menu->getName(), $menuRepository)) {
+                
+                $menuRepository->save($menu, true);
 
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('menu/new.html.twig', [
@@ -149,9 +154,12 @@ class MenuController extends AbstractController
                 }   
             }
 
-            $menuRepository->save($menu, true);
+            if($this->checkDuplicate($menu->getName(), $menuRepository)) {
+                
+                $menuRepository->save($menu, true);
 
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('menu/edit.html.twig', [
@@ -168,5 +176,14 @@ class MenuController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function checkDuplicate(string $name, MenuRepository $menuRepository): bool
+    {
+        $menuExist = $menuRepository->findByName($name);
+        if ($menuExist) {
+            return false;
+        }
+        return true;
     }
 }
