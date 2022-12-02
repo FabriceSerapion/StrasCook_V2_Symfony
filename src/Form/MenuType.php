@@ -15,7 +15,6 @@ class MenuType extends AbstractType
         $builder
             ->add('name')
             ->add('price')
-            ->add('rating')
             ->add('descr_appetizer')
             ->add('descr_starter')
             ->add('descr_meal')

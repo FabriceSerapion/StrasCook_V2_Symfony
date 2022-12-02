@@ -5,17 +5,31 @@ namespace App\Controller;
 use App\Repository\MenuRepository;
 use App\Repository\TagRepository;
 use App\Repository\UserRatingRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(RequestStack $requestStack, MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository): Response
+    public function index(RequestStack $requestStack,UserRepository $userRepository, MenuRepository $menuRepository, TagRepository $tagRepository, UserRatingRepository $userRatingRepository, AuthenticationUtils $authenticationUtils): Response
     {
+        // GETTING SESSION
+        $session = $requestStack->getSession();
+        
+        // GET USER FROM LOGIN
+        $user = $userRepository->findByUsername($authenticationUtils->getLastUsername());
+
+         // FILL SESSION WITH USER INFORMATIONS
+         if ($user) {
+            $session->set('idUser', $user[0]->getId());
+            $session->set('username', $user[0]->getUsername());
+        }
+
         $menus = $menuRepository->findBy(array(), null, 3, 0);
         foreach ($menus as $idx => $menu) {
             $tags = $tagRepository->findTagsFromMenu($menu->getId());
@@ -25,9 +39,6 @@ class HomeController extends AbstractController
             }
             $menus[$idx]->setTotalRatings($ratings[0]["totalRatings"]);
         }
-
-        // CREATE SESSION 
-        $session = $requestStack->getSession();
 
         if (!$session->has('adress')) {
             $adress = '';

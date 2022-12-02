@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTime;
 use App\Entity\Booking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,9 +48,10 @@ class BookingRepository extends ServiceEntityRepository
                 ->setParameter('idUser', $idUser);
             }
             if ($bookingDate) {
+                $datenew = DateTime::createFromFormat("Y-m-d", $bookingDate);
                 $query 
-                ->andwhere('b.date_booking > :bookingDate')
-                ->setParameter('bookingDate', $bookingDate);
+                ->andwhere('b.date > :datenew')
+                ->setParameter('datenew', $datenew);
             }
             if ($orderBy) {
                 $query 

@@ -29,9 +29,13 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->save($tag, true);
 
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            if($this->checkDuplicate($tag->getName(), $tagRepository)) {
+                
+                $tagRepository->save($tag, true);
+
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('tag/new.html.twig', [
@@ -55,9 +59,12 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->save($tag, true);
+            if($this->checkDuplicate($tag->getName(), $tagRepository)) {
+                
+                $tagRepository->save($tag, true);
 
-            return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('tag/edit.html.twig', [
@@ -74,5 +81,14 @@ class TagController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function checkDuplicate(string $name, TagRepository $tagRepository): bool
+    {
+        $tagExist = $tagRepository->findByName($name);
+        if ($tagExist) {
+            return false;
+        }
+        return true;
     }
 }

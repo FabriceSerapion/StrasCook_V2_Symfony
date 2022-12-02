@@ -34,12 +34,8 @@ class UserRatingController extends AbstractController
         UserRepository $userRepository,
         UserRatingRepository $userRatingRepository): Response
     {
-        var_dump($_GET);
         // GETTING SESSION 
         $session = $requestStack->getSession();
-
-        // GETTING USER ID
-        $idUser = ($session->get('idUser'));
 
         // GETTING THIS USER FROM ID
         $user = $userRepository->findById($session->get('idUser'));
@@ -57,6 +53,8 @@ class UserRatingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $userRatingRepository->save($userRating, true);
 
+            $this->modifyNoteGlobal($userRating->getRating(), 0, $userRatingRepository, $menuRepository, $menu[0]);
+
             return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -66,26 +64,33 @@ class UserRatingController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_rating_show', methods: ['GET'])]
-    public function show(UserRating $userRating): Response
-    {
-        return $this->render('user_rating/show.html.twig', [
-            'user_rating' => $userRating,
-        ]);
-    }
+    // #[Route('/{id}', name: 'app_user_rating_show', methods: ['GET'])]
+    // public function show(UserRating $userRating): Response
+    // {
+    //     return $this->render('user_rating/show.html.twig', [
+    //         'user_rating' => $userRating,
+    //     ]);
+    // }
 
     #[Route('/{id}/edit', name: 'app_user_rating_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request,
+    MenuRepository $menuRepository,
     UserRating $userRating,
     UserRatingRepository $userRatingRepository): Response
     {
         $form = $this->createForm(UserRatingType::class, $userRating);
         $form->handleRequest($request);
 
+        $ratingSaved = $userRating->getRating();
+
+        $menu = $menuRepository->findById($userRating->getMenu()->getId());
+
         if ($form->isSubmitted() && $form->isValid()) {
             $userRatingRepository->save($userRating, true);
 
-            return $this->redirectToRoute('app_user_rating_index', [], Response::HTTP_SEE_OTHER);
+            $this->modifyNoteGlobal($userRating->getRating(), $ratingSaved, $userRatingRepository, $menuRepository, $menu[0]);
+
+            return $this->redirectToRoute('app_user', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user_rating/edit.html.twig', [
@@ -104,5 +109,25 @@ class UserRatingController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_rating_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * Modifying note when user modify his note for a menu
+     */
+    public function modifyNoteGlobal(string $userRating, int $oldRating, UserRatingRepository $userRatingRepository, MenuRepository $menuRepository, Menu $menu): void
+    {
+        $noteMenu = $userRatingRepository->findAllRatingsByMenu($menu->getId());
+
+        $number = $noteMenu[0]['totalRatings'];
+
+        if ($oldRating == 0) {
+            $finalRating = $noteMenu[0]['ratings'] / $number;
+        } else {
+            $finalRating = ($noteMenu[0]['ratings'] - $oldRating + floatval($userRating)) / $number;
+        }
+
+        $menu->setRating($finalRating);
+
+        $menuRepository->save($menu, true);
     }
 }

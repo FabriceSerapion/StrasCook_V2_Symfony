@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Repository\MenuRepository;
 use App\Repository\TagRepository;
 use App\Repository\CookRepository;
@@ -34,9 +35,12 @@ class AdminController extends AbstractController
         $cooks = $cookRepository->findBy(array(), array('firstname' => 'ASC'));
 
         //GET ALL FUTURE BOOKS
-        $date = date('Y-m-d');
         $bookings = $bookingRepository->findBy(array(), array('date' => 'ASC'), 5, 0);
 
+        // GET ALL FUTURE BOOKINGS
+        $date = date('Y-m-d');
+        $bookings = $bookingRepository->findAllBookings(bookingDate : $date, orderBy : 'b.date');
+        
         //PUSH DATAS IN TWIG
         $data = ['menus' => $menus];
         $data['tags'] = $tags;

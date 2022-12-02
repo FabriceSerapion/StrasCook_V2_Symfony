@@ -82,13 +82,13 @@ class BookingController extends AbstractController
 
         // MODIFYING INFORMATIONS
         $datenew = DateTime::createFromFormat("Y-m-d", $session->get('date'));
-        $intTime = intval($session->get('time'));
+        // $intTime = intval($session->get('time'));
 
         // FILL BOOKING WITH SESSION INFORMATIONS
         $booking = new Booking();
         $booking->setAdress($session->get('adress'));
         $booking->setDate($datenew);
-        $booking->setTime($intTime);
+        $booking->setTime($session->get('time'));
         
         // FILL BOOKING WITH MENU CHOOSED
         $menu = $menuRepository->findOneById($_POST['id']);
