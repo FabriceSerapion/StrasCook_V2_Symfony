@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Tag
+{% endblock %}
+
+{% block content %}
+	<div class="d-flex flex-column align-items-center mt-4">
+		<h1>Ajout de tag</h1>
+
+		{{ include('tag/_form.html.twig') }}
+
+		<a href="{{ path('app_admin_index') }}">Retour</a>
+	</div>
+{% endblock %}

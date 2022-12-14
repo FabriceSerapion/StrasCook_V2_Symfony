@@ -1,0 +1,44 @@
+td, th {
+    padding: 10px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    font-size:large;
+}
+img {
+    height: 100px;
+    width: 100px;
+} 
+.bg-image{
+    display: flex;
+    flex-direction: column;
+}
+.header {
+    background-color: rgba(231, 156, 86, 0.774);
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    font-style: italic;
+    font-family:fantasy;
+}
+h1 {
+    padding: 20px;
+    letter-spacing: .2rem;
+}
+h2 {
+    padding: 20px;
+    margin: 20px;
+    background-color: rgb(118, 165, 42);
+    border-radius: 5px;
+    border-radius: 50% 20% / 10% 40%;
+    font-weight: bold;
+    text-align: center;
+}
+
+.table_user {
+    background-color: rgba(255,228,196, 0.6);
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 2vh;
+}

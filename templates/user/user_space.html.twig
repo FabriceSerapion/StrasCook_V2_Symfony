@@ -1,0 +1,85 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('user') }}
+{% endblock %}
+
+
+{% block content %}
+	<main>
+		<div class="header">
+			<img rel="icon" src="{{ asset('build/Logo_strascook.png') }}"/>
+			<h1>Espace Particulier</h1>
+		</div>
+		<div class="bg-image" style="background-image: url('assets/images/user.jpg')">
+			<h2>Retrouvez votre historique de commandes et laissez nous votre avis !</h2>
+			<table class="table_user">
+				<tr>
+					<th scope='col'>Date de réservation</th>
+					<th scope='col'>Heure de réservation</th>
+					<th scope='col'>Adresse</th>
+					<th scope='col'>Chef cuisinier</th>
+					<th scope='col'>Nom du menu</th>
+					<th scope='col'>Quantité de prestation</th>
+					<th scope='col'>Prix total</th>
+				</tr>
+				{% for booking in bookings %}
+					<tr>
+						<td>{{ booking.date|date('d-m-Y') }}</td>
+						<td>{{ booking.time }}</td>
+						<td>{{ booking.adress}}</td>
+						<td>{{ booking.firstname }}</td>
+						{# Gives the booking.cook.firstname #}
+						<td>{{ booking.name }}</td>
+						{# Gives booking.menu.name #}
+						<td>{{ booking.quantity }}</td>
+						<td>{{ booking.price }}€</td>
+					</tr>
+				{% endfor %}
+			</table>
+
+			<h2>Tous vos menus déjà commandés notés</h2>
+			<table class="table_user">
+				<tr>
+					<th scope='col'>Nom du menu</th>
+					<th scope='col'>Note globale du menu</th>
+					<th scope='col'>Note de l'utilisateur</th>
+					<th scope='col'>Modification</th>
+				</tr>
+				{% for menu in menus %}
+					{% if menu.userRating.rating != 0 %}a
+						<tr>
+							<td>{{ menu.name }}</td>
+							<td>{{ menu.rating }}</td>
+							<td>{{ menu.userRating.rating }}</td>
+							<td>
+								<a href="{{ path('app_user_rating_edit', { 'id': menu.userRating.id }) }}">Modifier la note</a>
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+
+			<h2>Tous vos menus déjà commandés non notés</h2>
+			<table class="table_user">
+				<tr>
+					<th scope='col'>Nom du menu</th>
+					<th scope='col'>Note globale du menu</th>
+					<th scope='col'>Ajout</th>
+				</tr>
+				{% for menu in menus %}
+					{% if menu.userRating.rating == 0 %}
+						<tr>
+							<td>{{ menu.name }}</td>
+							<td>{{ menu.rating }}</td>
+							<td>
+								<a href="{{ path('app_user_rating_new', { 'menu_id' : menu.id }) }}">Ajouter une note !</a>
+							</td>
+						</tr>
+
+					{% endif %}
+				{% endfor %}
+			</table>
+		</div>
+	</main>
+{% endblock %}

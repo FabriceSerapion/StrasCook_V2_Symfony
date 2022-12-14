@@ -1,0 +1,71 @@
+/* Just a test to check if css is really integrated */
+/* * {
+  color: red !important;
+} */
+
+.accueil {
+  background-image: url("../images/Homepage5.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left;
+}
+
+#form-line {
+  background: #6b2024;
+}
+
+[type="button"],
+[type="reset"],
+[type="submit"],
+button {
+  display: flex;
+  align-items: center;
+}
+
+#adress {
+  width: 100%;
+}
+
+.tag-container {
+  color: white;
+  background-color: gray;
+  width: fit-content;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 5px;
+}
+
+.number_ratings {
+  font-size: 15px;
+}
+
+.display-1 {
+  font-size: 70px; 
+  margin-top: 80px;
+  margin-bottom: 100px;
+  font-weight: bold;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.load {
+  font-size: 20px; 
+  margin-bottom: 50px;
+  padding: 1em;
+  font-weight: bold;
+  background-color: rgb(90, 50, 4);
+  border-radius: 50% 20% / 10% 40%;
+}
+
+.modal-body{
+  text-align: center;
+}
+
+.section{
+  margin-top: 30px;
+  margin-bottom: 18px;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 14px;
+  text-transform: uppercase;
+  color:brown;
+}

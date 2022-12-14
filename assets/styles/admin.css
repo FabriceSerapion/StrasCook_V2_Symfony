@@ -1,0 +1,58 @@
+.bg-image{
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+}
+.header {
+    background-color: rgba(153, 194, 156, 0.774);
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: flex-start;
+    font-style: italic;
+    font-family:fantasy;
+}
+h1 {
+    padding: 20px;
+    letter-spacing: .2rem;
+}
+td, th {
+    padding: 10px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    font-size:large;
+}
+.forms-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+.forms-admin-menus, .forms-admin-tags, .forms-admin-cooks, .forms-admin-books {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size:large;
+    margin-bottom: 50px;
+}
+.delete_button {
+    padding:5px;
+}
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1200px);
+    text-align: justify;
+}
+a {
+    padding-right: 100px;
+} 
+img {
+    height: 100px;
+    width: 100px;
+}  
+.row {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

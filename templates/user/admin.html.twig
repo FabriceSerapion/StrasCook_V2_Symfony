@@ -1,0 +1,109 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('admin') }}
+{% endblock %}
+
+{% block content %}
+	<main>
+		<div class="header">
+			<img rel="icon" src="assets/images/favicon.ico"/>
+			<h1>Interface Administrateur StrasCook</h1>
+		</div>
+		<div class="bg-image" style="background-image: url('assets/images/admin.jpg')">
+			<div class="forms-admin">
+				<h2>Formulaire d'ajout d'un menu</h2>
+				<div class="forms-admin-menus">
+					<a href="{{ path('app_menu_new') }}">Ajouter un menu !</a>
+					<ul>
+						{% for menu in menus %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{ menu.name }}</li>
+									</div>
+									<div class="col-sm">
+										<a href="{{ path('app_menu_edit', {'id': menu.id}) }}">Modifier le menu</a>
+									</div>
+									<div class="col-sm">
+										{{ include('menu/_delete_form.html.twig') }}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<h2>Formulaire d'ajout d'un tag</h2>
+				<div class="forms-admin-tags">
+					<a href="{{ path('app_tag_new') }}">Ajouter un tag !</a>
+					<ul>
+						{% for tag in tags %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{ tag.name }}</li>
+									</div>
+									<div class="col-sm">
+										<a href="{{ path('app_tag_edit', {'id': tag.id}) }}">Modifier le tag</a>
+									</div>
+									<div class="col-sm">
+										{{ include('tag/_delete_form.html.twig') }}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<h2>Formulaire d'ajout d'un cuisinier</h2>
+				<div class="forms-admin-cooks">
+					<a href="{{ path('app_cook_new') }}">Ajouter un cuisinier !</a>
+					<ul>
+						{% for cook in cooks %}
+							<div class="container">
+								<div class="row">
+									<div class="col-sm">
+										<li>{{ cook.firstname }}</li>
+									</div>
+									<div class="col-sm">
+										<a href="{{ path('app_cook_edit', {'id': cook.id}) }}">Modifier le cuisinier</a>
+									</div>
+									<div class="col-sm">
+										{{ include('cook/_delete_form.html.twig') }}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="forms-admin-books">
+					<table>
+						<tr>
+							<th colspan="6">Historique des commandes</th>
+						</tr>
+
+						<tr>
+							<th scope='col'>Date de réservation</th>
+							<th scope='col'>Heure de réservation</th>
+							<th scope='col'>Adresse du client</th>
+							<th scope='col'>Chef cuisinier</th>
+							<th scope='col'>Nom du menu</th>
+							<th scope='col'>Quantité de prestation</th>
+							<th scope='col'>Prix total</th>
+						</tr>
+						{% for booking in bookings %}
+							<tr>
+								<td>{{ booking.date|date('d-m-Y') }}</td>
+								<td>{{ booking.time }}</td>
+								<td>{{ booking.adress }}</td>
+								<td>{{ booking.firstname }}</td>
+								<td>{{ booking.name }}</td>
+								<td>{{ booking.quantity }}</td>
+								<td>{{ booking.price }}€</td>
+							</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
